@@ -1,12 +1,12 @@
 provider "aws" {
   region = var.region
-  default_tags {
-    tags = {
-      createdBy        = var.createdBy
-      project          = var.project
-      projectComponent = var.projectComponent
-    }
-  }
+  # default_tags {
+  #   tags = {
+  #     createdBy        = var.createdBy
+  #     project          = var.project
+  #     projectComponent = var.projectComponent
+  #   }
+  # }
 }
 
 terraform {
