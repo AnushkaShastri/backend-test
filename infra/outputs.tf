@@ -1,3 +1,3 @@
-output "app_runner_url" {
-  value = "https://${aws_apprunner_service.app_node_ping.service_url}/api/ping"
+output "cloudfront_url" {
+  value = "${aws_cloudfront_distribution.distribution.domain_name}/api/ping"
 }
