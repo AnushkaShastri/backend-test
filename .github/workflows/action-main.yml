@@ -1,0 +1,19 @@
+name: test-components
+on:
+  push:
+    branches: 
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - name: Deploying shell script
+        run: bash deploy/deploy.sh file=kloudjet-configurations.json access_key=${{ secrets.AWS_ACCESS_KEY }} secret_key=${{ secrets.AWS_SECRET_KEY }} accid=${{ secrets.AWS_ACCOUNT_ID}} tf_http_address=${{ secrets.TF_HTTP_ADDRESS }} tf_http_lock_address=${{ secrets.TF_HTTP_LOCK_ADDRESS }} tf_http_unlock_address=${{ secrets.TF_HTTP_UNLOCK_ADDRESS }} tf_http_username=${{ secrets.TF_HTTP_USERNAME }} tf_http_password=${{ secrets.TF_HTTP_PASSWORD }} env=dev createdBy=Tag project=Tag projectComponent=Tag mode=cicd
+        
+        # accid=${{ secrets.AWS_ACCOUNT_ID}}
+        #  username=${{ secrets.USERNAME }} password=${{ secrets.PASSWORD }} 
+        # access_key=${{ secrets.AWS_ACCESS_KEY }} secret_key=${{ secrets.AWS_SECRET_KEY }} accid=${{ secrets.AWS_ACCOUNT_ID}}
