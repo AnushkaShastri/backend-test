@@ -7,7 +7,7 @@ variable "region" {
 variable "reponame" {
   description = "Name of the repository"
   type        = string
-  default     = "kloudjet-nodejs-ec2-repo"
+  default     = "kloudjet-nodejs-fargate-repo"
 }
 
 variable "image_tag_mutability" {
@@ -25,25 +25,19 @@ variable "force_delete" {
 variable "clustername" {
   description = "Name of the cluster (up to 255 letters, numbers, hyphens, and underscores)"
   type        = string
-  default     = "kloudjet-nodejs-ec2-cluster"
+  default     = "kloudjet-nodejs-fargate-cluster"
 }
 
 variable "ecs_task_family" {
-  description = "A unique name for your task definition"
+  description = " A unique name for your task definition"
   type        = string
   default     = "kloudjet_ecs_task"
-}
-
-variable "ecs_task_essential" {
-  description = "If the essential parameter of a container is marked as true, and that container fails or stops for any reason, all other containers that are part of the task are stopped"
-  type        = string
-  default     = "true"
 }
 
 variable "requires_compatibilities" {
   description = "Set of launch types required by the ECS task. The valid values are EC2 and FARGATE"
   type        = list(any)
-  default     = ["EC2"]
+  default     = ["FARGATE"]
 }
 
 variable "network_mode" {
@@ -65,7 +59,7 @@ variable "cpu" {
 }
 
 variable "ecstaskrolename" {
-  description = "Name of the ECS Task IAM Role. If omitted, Terraform will assign a random, unique name"
+  description = "Name of the role. If omitted, Terraform will assign a random, unique name"
   type        = string
   default     = "kj_ecsTaskExecutionRole"
 }
@@ -79,7 +73,7 @@ variable "servicename" {
 variable "launch_type" {
   description = "Launch type on which to run your ECS service. The valid values are EC2, FARGATE, and EXTERNAL. Defaults to EC2"
   type        = string
-  default     = "EC2"
+  default     = "FARGATE"
 }
 
 variable "desired_count" {
@@ -92,6 +86,12 @@ variable "container_port" {
   description = "Port on the container to associate with the load balancer"
   type        = number
   default     = 8080
+}
+
+variable "assign_public_ip" {
+  description = "Assign a public IP address to the ENI (Fargate launch type only). Valid values are true or false. Default false"
+  type        = bool
+  default     = true
 }
 
 variable "app_service_sg_ingress_from_port" {
@@ -107,7 +107,7 @@ variable "app_service_sg_ingress_to_port" {
 }
 
 variable "app_service_sg_ingress_protocol" {
-  description = "Ingress Protocol, if you select a protocol of -1 (semantically equivalent to all, which is not a valid value here), you must specify a from_port and to_port equal to 0"
+  description = "Protocol. If you select a protocol of -1 (semantically equivalent to all, which is not a valid value here), you must specify a from_port and to_port equal to 0"
   type        = string
   default     = "-1"
 }
@@ -157,7 +157,7 @@ variable "regionc" {
 variable "lbname" {
   description = "The name of the LB. This name must be unique within your AWS account, can have a maximum of 32 characters, must contain only alphanumeric characters or hyphens, and must not begin or end with a hyphen. If not specified, Terraform will autogenerate a name beginning with tf-lb"
   type        = string
-  default     = "nodejs-lb-ec2"
+  default     = "nodejs-lb-fargate"
 }
 
 variable "load_balancer_type" {
@@ -169,13 +169,13 @@ variable "load_balancer_type" {
 variable "lb_sg_ingress_from_port" {
   description = "Start port (or ICMP type number if protocol is icmp or icmpv6)"
   type        = number
-  default     = 8080
+  default     = 80
 }
 
 variable "lb_sg_ingress_to_port" {
   description = "End range port (or ICMP code if protocol is icmp"
   type        = number
-  default     = 8080
+  default     = 80
 }
 
 variable "lb_sg_ingress_protocol" {
@@ -235,7 +235,7 @@ variable "tgname" {
 variable "lb_tg_port" {
   description = "Port on which targets receive traffic, unless overridden when registering a specific target. Required when target_type is instance, ip or alb. Does not apply when target_type is lambda"
   type        = number
-  default     = 8080
+  default     = 80
 }
 
 variable "lb_tg_protocol" {
@@ -292,40 +292,10 @@ variable "lb_tg_health_protocol" {
   default     = "HTTP"
 }
 
-variable "image" {
-  description = "AMI to use for the instance. Required unless launch_template is specified and the Launch Template specifes an AMI"
-  type        = string
-  default     = "ami-02e136e904f3da870"
-}
-
-variable "instance_type" {
-  description = "Instance type to use for the instance. Updates to this field will trigger a stop/start of the EC2 instance"
-  type        = string
-  default     = "t2.micro"
-}
-
-variable "ec2_role_name" {
-  description = "Name of IAM role for EC2"
-  type        = string
-  default     = "nodejs_ecsTaskExecutionRole"
-}
-
-variable "ec2_profile_name" {
-  description = "Name of IAM Instance Profile for EC2"
-  type        = string
-  default     = "nodejs_ecsTaskExecutionProfile"
-}
-
-variable "ec2_policy_name" {
-  description = "Name of IAM Policy for EC2"
-  type        = string
-  default     = "nodejs_ecsTaskExecutionPolicy"
-}
-
 variable "lb_listener_port" {
   description = "Port on which the load balancer is listening. Not valid for Gateway Load Balancers"
   type        = string
-  default     = "8080"
+  default     = "80"
 }
 
 variable "lb_listener_protocol" {
@@ -420,7 +390,7 @@ variable "origin_protocol_policy" {
 variable "http_port" {
   description = "The HTTP port the custom origin listens on"
   type        = string
-  default     = "8080"
+  default     = "80"
 }
 
 variable "https_port" {
@@ -498,17 +468,17 @@ variable "env" {
 variable "createdBy" {
   description = "Tag for each resource, reflects author name"
   type        = string
-  default     = "KloudJet"
+  default = "KloudJet"
 }
 
 variable "project" {
   description = "Tag for each resource, reflects Project ID (Find your Project ID on the Kloudjet Portal, passing incorrect or null value will disturb the metrics)"
   type        = string
-  default     = "PID123"
+  default = "PID123"
 }
 
 variable "projectComponent" {
   description = "Tag for each resource, reflects Component ID (Find your Project Component ID on the Kloudjet Portal, passing incorrect or null value will disturb the metrics)"
   type        = string
-  default     = "CID123"
+  default = "CID123"
 }
