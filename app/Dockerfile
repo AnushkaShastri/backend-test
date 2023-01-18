@@ -1,6 +1,4 @@
-FROM node:alpine
-COPY package*.json ./
-RUN npm install
-COPY . .
+FROM openjdk:alpine
+COPY target/myproject-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
-CMD [ "node", "index.js" ]
+ENTRYPOINT ["java","-jar","/app.jar"]

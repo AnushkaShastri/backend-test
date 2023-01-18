@@ -1,0 +1,14 @@
+{
+    "dev": {
+        "region" : "us-east-1" ,
+        "iam_policy_name" : "kloudjet-spring-app-iam-policy" ,
+        "iam_role_name" : "kloudjet-spring-app-iam-role" ,
+        "repo_name" : "kloudjet-spring-app-repo" ,
+        "image_tag_mutability" : "IMMUTABLE" ,
+        "force_delete" : true,
+        "apprunner_service_name" : "kloudjet-spring-app-ping" ,
+        "port" : "8080" ,
+        "image_tag" : "latest" ,
+        "auto_deployments_enabled" : true 
+    }
+}
