@@ -1,10 +1,9 @@
 # package directories
-/node_modules
-package-lock.json
+node_modules
 jspm_packages
 
 # Serverless directories
 .serverless
-coverage
+
 # Webpack directories
 .webpack
