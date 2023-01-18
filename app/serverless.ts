@@ -4,7 +4,7 @@ import ping from '@functions/ping';
 
 const serverlessConfiguration: AWS = {
   service: '${env:SERVICE}',
-  frameworkVersion: '2',
+  frameworkVersion: '3',
   custom: {
     webpack: {
       webpackConfig: './webpack.config.js',
@@ -19,7 +19,7 @@ const serverlessConfiguration: AWS = {
   
   provider: {
     name: 'aws',
-    runtime: 'nodejs14.x',
+    runtime: 'nodejs18.x',
     apiGateway: {
       minimumCompressionSize: '${env:MINIMUM_COMPRESSION_SIZE}',
       shouldStartNameWithService: true,
