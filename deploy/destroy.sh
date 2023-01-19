@@ -37,6 +37,7 @@ echo service : $service
 echo serverlessOfflineHttpPort : $serverlessOfflineHttpPort
 echo minimumCompressionSize : $minimumCompressionSize
 echo awsNodejsConnectionReuseEnabled : $awsNodejsConnectionReuseEnabled
+serverless -v
 
 export SERVICE=$service
 
@@ -44,6 +45,7 @@ echo "Configuring AWS..."
 aws configure set aws_access_key_id $access_key && aws configure set aws_secret_access_key $secret_key && aws configure set default.region $region
 
 cd app
+npm install
 echo "Destruction of resources will take few minutes...."
 serverless remove --stage=$env --param="serverlessOfflineHttpPort=$serverlessOfflineHttpPort" --param="minimumCompressionSize=$minimumCompressionSize" --param="awsNodejsConnectionReuseEnabled=$awsNodejsConnectionReuseEnabled"
 
