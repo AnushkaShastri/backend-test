@@ -21,7 +21,7 @@ const serverlessConfiguration: AWS = {
     name: 'aws',
     runtime: 'nodejs18.x',
     apiGateway: {
-      minimumCompressionSize: `${param:minimumCompressionSize}`,
+      minimumCompressionSize: '${param:minimumCompressionSize}',
       shouldStartNameWithService: true,
     },
     environment: {

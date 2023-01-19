@@ -35,6 +35,7 @@ echo "Following values will be used for deployment..."
 echo region : $region
 echo service : $service
 echo awsNodejsConnectionReuseEnabled : $awsNodejsConnectionReuseEnabled
+echo minimumCompressionSiz : $minimumCompressionSiz
 
 export SERVICE=$service
 # export SERVERLESS_OFFLINE_HTTP_PORT=$serverlessOfflineHttpPort
