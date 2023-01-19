@@ -3,7 +3,7 @@ import type { AWS } from '@serverless/typescript';
 import ping from '@functions/ping';
 
 const serverlessConfiguration: AWS = {
-  service: '${env:SERVICE}',
+  service: '${param:service}',
   frameworkVersion: '3',
   custom: {
     webpack: {
@@ -12,7 +12,7 @@ const serverlessConfiguration: AWS = {
     },
     // Custom port to run the functions locally
     'serverless-offline': {
-      httpPort: '${env:SERVERLESS_OFFLINE_HTTP_PORT}',
+      httpPort: 3000,
     },
   },
   plugins: ['serverless-webpack','serverless-offline'],
@@ -21,11 +21,11 @@ const serverlessConfiguration: AWS = {
     name: 'aws',
     runtime: 'nodejs18.x',
     apiGateway: {
-      minimumCompressionSize: '${env:MINIMUM_COMPRESSION_SIZE}',
+      minimumCompressionSize: 1024,
       shouldStartNameWithService: true,
     },
     environment: {
-      AWS_NODEJS_CONNECTION_REUSE_ENABLED: '${env:AWS_NODEJS_CONNECTION_REUSE_ENABLED}',
+      AWS_NODEJS_CONNECTION_REUSE_ENABLED: '${param:awsNodejsConnectionReuseEnabled}',
     }
   },
   // import the function via paths
