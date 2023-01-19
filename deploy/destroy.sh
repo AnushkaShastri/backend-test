@@ -30,7 +30,7 @@ done < <(jq 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< ${!envObj} | 
 [[ -z "$minimumCompressionSize" ]] && minimumCompressionSize="1024",
 [[ -z "$awsNodejsConnectionReuseEnabled" ]] && awsNodejsConnectionReuseEnabled="1"
 
-echo "Following values will be used for deployment..."
+echo "Following values will be used for..."
 
 echo region : $region
 echo service : $service
@@ -44,8 +44,7 @@ echo "Configuring AWS..."
 aws configure set aws_access_key_id $access_key && aws configure set aws_secret_access_key $secret_key && aws configure set default.region $region
 
 cd app
-echo "Installing Dependencies..."
-npm install
-echo "Setting it up will take few minutes...."
-serverless deploy --stage=$env --param="serverlessOfflineHttpPort=$serverlessOfflineHttpPort" --param="minimumCompressionSize=$minimumCompressionSize" --param="awsNodejsConnectionReuseEnabled=$awsNodejsConnectionReuseEnabled"
-echo "Everything is ready...."
+echo "Destruction of resources will take few minutes...."
+serverless remove --stage=$env --param="serverlessOfflineHttpPort=$serverlessOfflineHttpPort" --param="minimumCompressionSize=$minimumCompressionSize" --param="awsNodejsConnectionReuseEnabled=$awsNodejsConnectionReuseEnabled"
+
+echo "All the resources are destroyed"
