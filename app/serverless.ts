@@ -26,6 +26,11 @@ const serverlessConfiguration: AWS = {
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '${param:awsNodejsConnectionReuseEnabled}',
+    },
+    tags: {
+      createdBy : '${param:createdBy}' as any,
+      project : '${param:project}' as any,
+      projectComponent : '${param:projectComponent}' as any
     }
   },
   // import the function via paths

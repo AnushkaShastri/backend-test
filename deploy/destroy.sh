@@ -37,7 +37,10 @@ echo service : $service
 echo serverlessOfflineHttpPort : $serverlessOfflineHttpPort
 echo minimumCompressionSize : $minimumCompressionSize
 echo awsNodejsConnectionReuseEnabled : $awsNodejsConnectionReuseEnabled
-serverless -v
+echo createdBy : $createdBy
+echo project : $project
+echo projectComponent : $projectComponent
+echo env : $env
 
 export SERVICE=$service
 
@@ -47,6 +50,6 @@ aws configure set aws_access_key_id $access_key && aws configure set aws_secret_
 cd app
 npm install
 echo "Destruction of resources will take few minutes...."
-serverless remove --stage=$env --param="serverlessOfflineHttpPort=$serverlessOfflineHttpPort" --param="minimumCompressionSize=$minimumCompressionSize" --param="awsNodejsConnectionReuseEnabled=$awsNodejsConnectionReuseEnabled"
+serverless remove --stage=$env --param="serverlessOfflineHttpPort=$serverlessOfflineHttpPort" --param="minimumCompressionSize=$minimumCompressionSize" --param="awsNodejsConnectionReuseEnabled=$awsNodejsConnectionReuseEnabled" --param="createdBy=$createdBy" --param="project=$project" --param="projectComponent=$projectComponent"
 
 echo "All the resources are destroyed"

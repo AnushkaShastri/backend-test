@@ -1,4 +1,0 @@
-The following resources will be created
--aws-sls-backend-nodejs-lambda
--API gateway
--S3 bucket

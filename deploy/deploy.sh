@@ -37,6 +37,10 @@ echo service : $service
 echo serverlessOfflineHttpPort : $serverlessOfflineHttpPort
 echo minimumCompressionSize : $minimumCompressionSize
 echo awsNodejsConnectionReuseEnabled : $awsNodejsConnectionReuseEnabled
+echo createdBy : $createdBy
+echo project : $project
+echo projectComponent : $projectComponent
+echo env : $env
 
 export SERVICE=$service
 
@@ -47,5 +51,5 @@ cd app
 echo "Installing Dependencies..."
 npm install
 echo "Setting it up will take few minutes...."
-serverless deploy --stage=$env --param="serverlessOfflineHttpPort=$serverlessOfflineHttpPort" --param="minimumCompressionSize=$minimumCompressionSize" --param="awsNodejsConnectionReuseEnabled=$awsNodejsConnectionReuseEnabled"
+serverless deploy --stage=$env --param="serverlessOfflineHttpPort=$serverlessOfflineHttpPort" --param="minimumCompressionSize=$minimumCompressionSize" --param="awsNodejsConnectionReuseEnabled=$awsNodejsConnectionReuseEnabled" --param="createdBy=$createdBy" --param="project=$project" --param="projectComponent=$projectComponent"
 echo "Everything is ready...."
