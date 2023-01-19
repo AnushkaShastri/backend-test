@@ -36,7 +36,7 @@ echo region : $region
 echo service : $service
 echo awsNodejsConnectionReuseEnabled : $awsNodejsConnectionReuseEnabled
 
-# export SERVICE=$service
+export SERVICE=$service
 # export SERVERLESS_OFFLINE_HTTP_PORT=$serverlessOfflineHttpPort
 # export MINIMUM_COMPRESSION_SIZE=$minimumCompressionSize
 # export AWS_NODEJS_CONNECTION_REUSE_ENABLED=$awsNodejsConnectionReuseEnabled
@@ -48,4 +48,4 @@ cd app
 echo "Installing Dependencies..."
 npm install
 echo "Setting it up will take few minutes...."
-serverless deploy --stage=$env --param="service=$service" --param="awsNodejsConnectionReuseEnabled=$awsNodejsConnectionReuseEnabled"
+serverless deploy --stage=$env --param="awsNodejsConnectionReuseEnabled=$awsNodejsConnectionReuseEnabled"

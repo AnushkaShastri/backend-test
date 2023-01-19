@@ -3,7 +3,7 @@ import type { AWS } from '@serverless/typescript';
 import ping from '@functions/ping';
 
 const serverlessConfiguration: AWS = {
-  service: '${param:service}',
+  service: '${env:SERVICE}',
   frameworkVersion: '3',
   custom: {
     webpack: {
