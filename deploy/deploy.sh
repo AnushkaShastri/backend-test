@@ -34,13 +34,11 @@ echo "Following values will be used for deployment..."
 
 echo region : $region
 echo service : $service
+echo serverlessOfflineHttpPort : $serverlessOfflineHttpPort
+echo minimumCompressionSize : $minimumCompressionSize
 echo awsNodejsConnectionReuseEnabled : $awsNodejsConnectionReuseEnabled
-echo minimumCompressionSiz : $minimumCompressionSiz
 
 export SERVICE=$service
-# export SERVERLESS_OFFLINE_HTTP_PORT=$serverlessOfflineHttpPort
-# export MINIMUM_COMPRESSION_SIZE=$minimumCompressionSize
-# export AWS_NODEJS_CONNECTION_REUSE_ENABLED=$awsNodejsConnectionReuseEnabled
 
 echo "Configuring AWS..."
 aws configure set aws_access_key_id $access_key && aws configure set aws_secret_access_key $secret_key && aws configure set default.region $region
@@ -49,4 +47,4 @@ cd app
 echo "Installing Dependencies..."
 npm install
 echo "Setting it up will take few minutes...."
-serverless deploy --stage=$env --param="awsNodejsConnectionReuseEnabled=$awsNodejsConnectionReuseEnabled" --param="minimumCompressionSize=$minimumCompressionSize"
+serverless deploy --stage=$env --param="serverlessOfflineHttpPort=$serverlessOfflineHttpPort" --param="minimumCompressionSize=$minimumCompressionSize" --param="awsNodejsConnectionReuseEnabled=$awsNodejsConnectionReuseEnabled"

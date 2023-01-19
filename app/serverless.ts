@@ -12,7 +12,7 @@ const serverlessConfiguration: AWS = {
     },
     // Custom port to run the functions locally
     'serverless-offline': {
-      httpPort: 3000,
+      httpPort: '${param:serverlessOfflineHttpPort}' as any,
     },
   },
   plugins: ['serverless-webpack','serverless-offline'],
