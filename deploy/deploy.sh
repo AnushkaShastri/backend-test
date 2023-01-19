@@ -48,4 +48,4 @@ cd app
 echo "Installing Dependencies..."
 npm install
 echo "Setting it up will take few minutes...."
-serverless deploy --stage=$env --param="awsNodejsConnectionReuseEnabled=$awsNodejsConnectionReuseEnabled"
+serverless deploy --stage=$env --param="awsNodejsConnectionReuseEnabled=$awsNodejsConnectionReuseEnabled" --param="minimumCompressionSize=$minimumCompressionSize"
