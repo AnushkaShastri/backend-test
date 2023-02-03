@@ -65,8 +65,8 @@ resource "aws_ecs_task_definition" "app_task" {
       "essential": ${var.ecs_task_essential},
       "portMappings": [
         {
-          "containerPort": ${var.container_port},
-          "hostPort": ${var.container_port}
+          "containerPort": 8080,
+          "hostPort": 8080
         }
       ],
       "memory": ${var.memory},
@@ -78,7 +78,7 @@ resource "aws_ecs_task_definition" "app_task" {
   network_mode             = var.network_mode
   memory                   = var.memory
   cpu                      = var.cpu
-  execution_role_arn       = aws_iam_role.app_ecsTaskExecutionRole.arn
+  execution_role_arn       = "${aws_iam_role.app_ecsTaskExecutionRole.arn}"
 }
 
 resource "aws_iam_role" "app_ecsTaskExecutionRole" {
