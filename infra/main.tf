@@ -42,6 +42,7 @@ resource "aws_ecr_repository_policy" "app_container_ecr_repo_policy" {
           "ecr:GetLifecyclePolicy",
           "ecr:InitiateLayerUpload",
           "ecr:PutImage",
+          "ecr:DescribeImages",
           "ecr:UploadLayerPart"
         ]
       }
@@ -251,6 +252,7 @@ resource "aws_iam_role_policy" "ec2_policy" {
           "ecr:GetDownloadUrlForLayer",
           "ecr:GetLifecyclePolicy",
           "ecr:InitiateLayerUpload",
+          "ecr:DescribeImages",
           "ecr:PutImage",
           "ecr:UploadLayerPart"
       ],
