@@ -1,0 +1,90 @@
+@tailwind base;
+
+/* Your own custom base styles */
+
+/* Start purging... */
+@tailwind components;
+/* Stop purging. */
+
+/* Your own custom component styles */
+
+/* Start purging... */
+@tailwind utilities;
+/* Stop purging. */
+
+/* Your own custom utilities */
+/* @layer components{ */
+.main-div {
+    @apply overscroll-y-contain;
+}
+
+.footer-div{
+    @apply bg-gray-400 text-gray-600 fixed inset-x-0 bottom-0 text-justify text-sm py-2;
+}
+
+.custom-li-link{
+    @apply flex place-content-center;
+}
+
+.img-div{
+    @apply h-48 w-screen bg-bg-image;
+}
+
+.custom-logo{
+    @apply h-48 w-full mx-auto object-contain;
+}
+
+.about-outer-div{
+    @apply flex mb-4 w-full;
+}
+
+.about-inner-div{
+    @apply w-full bg-gray-400 h-8;
+}
+
+.custom-p-about{
+    @apply text-base text-center font-medium text-gray-900;
+}
+
+.main-ul-div{
+    @apply flex place-content-center;
+}
+
+.custom-li-margin{
+    @apply mr-6;
+}
+
+.custom-li-link{
+    @apply text-blue-500 hover:text-blue-800;
+}
+
+.header-div{
+    @apply w-full mt-10;
+}
+
+.custom-header-text{
+    @apply text-xl font-normal leading-normal mt-0 mb-2 text-indigo-800 flex items-center justify-center;
+}
+
+.custom-button{
+    @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded-full;
+}
+
+.ping-div{
+    @apply w-1/2  float-left flex items-center justify-center;
+}
+
+.terminal-main-div{
+    @apply w-1/2 float-right px-4;
+}
+
+
+.custom-terminal-msg-div{
+    @apply mt-4 flex;
+}
+
+.custom-terminal-role{
+    @apply text-green-400;
+}
+
+/* } */
