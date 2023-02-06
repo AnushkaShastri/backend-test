@@ -120,24 +120,24 @@ npm install
 # npm audit fix --force
 echo "Building the project..."
 npm run build
-npm run start
+# npm run start
 # npm install -g serve
 # serve -s build
 
-# cd ../infra
-# echo "Configuring AWS..."
-# aws configure set aws_access_key_id $access_key && aws configure set aws_secret_access_key $secret_key && aws configure set default.region $region
+cd ../infra
+echo "Configuring AWS..."
+aws configure set aws_access_key_id $access_key && aws configure set aws_secret_access_key $secret_key && aws configure set default.region $region
 
-# echo "Initializing..."
-# terraform init -reconfigure
+echo "Initializing..."
+terraform init -reconfigure
 
-# echo "Setting it up will take few minutes...."
-# terraform apply -var region=$region -var log_bucket_name=$log_bucket_name -var deployment_bucket_name=$deployment_bucket_name -var log_bucket_force_destroy=$log_bucket_force_destroy -var log_bucket_access_control=$log_bucket_access_control -var deployment_bucket_force_destroy=$deployment_bucket_force_destroy -var deployment_bucket_access_control=$deployment_bucket_access_control -var index_document=$index_document -var error_document=$error_document -var origin_protocol_policy=$origin_protocol_policy -var http_port=$http_port -var https_port=$https_port -var origin_ssl_protocols=$origin_ssl_protocols -var enabled=$enabled -var is_ipv6_enabled=$is_ipv6_enabled -var default_root_object=$default_root_object -var include_cookies=$include_cookies -var prefix=$prefix -var error_caching_min_ttl=$error_caching_min_ttl -var error_code=$error_code -var response_code=$response_code -var response_page_path=$response_page_path -var allowed_methods=$allowed_methods -var cached_methods=$cached_methods -var query_string=$query_string -var forward=$forward -var viewer_protocol_policy=$viewer_protocol_policy -var min_ttl=$min_ttl -var default_ttl=$default_ttl -var max_ttl=$max_ttl -var restriction_type=$restriction_type -var cloudfront_default_certificate=$cloudfront_default_certificate -var createdBy=$createdBy -var project=$project -var projectComponent=$projectComponent -var env=$env --auto-approve
+echo "Setting it up will take few minutes...."
+terraform apply -var region=$region -var log_bucket_name=$log_bucket_name -var deployment_bucket_name=$deployment_bucket_name -var log_bucket_force_destroy=$log_bucket_force_destroy -var log_bucket_access_control=$log_bucket_access_control -var deployment_bucket_force_destroy=$deployment_bucket_force_destroy -var deployment_bucket_access_control=$deployment_bucket_access_control -var index_document=$index_document -var error_document=$error_document -var origin_protocol_policy=$origin_protocol_policy -var http_port=$http_port -var https_port=$https_port -var origin_ssl_protocols=$origin_ssl_protocols -var enabled=$enabled -var is_ipv6_enabled=$is_ipv6_enabled -var default_root_object=$default_root_object -var include_cookies=$include_cookies -var prefix=$prefix -var error_caching_min_ttl=$error_caching_min_ttl -var error_code=$error_code -var response_code=$response_code -var response_page_path=$response_page_path -var allowed_methods=$allowed_methods -var cached_methods=$cached_methods -var query_string=$query_string -var forward=$forward -var viewer_protocol_policy=$viewer_protocol_policy -var min_ttl=$min_ttl -var default_ttl=$default_ttl -var max_ttl=$max_ttl -var restriction_type=$restriction_type -var cloudfront_default_certificate=$cloudfront_default_certificate -var createdBy=$createdBy -var project=$project -var projectComponent=$projectComponent -var env=$env --auto-approve
 
-# aws s3 sync ../app/build s3://$env-$deployment_bucket_name
+aws s3 sync ../app/build s3://$env-$deployment_bucket_name
 
-# echo "Processing....."
-# terraform apply -var region=$region -var log_bucket_name=$log_bucket_name -var deployment_bucket_name=$deployment_bucket_name -var log_bucket_force_destroy=$log_bucket_force_destroy -var log_bucket_access_control=$log_bucket_access_control -var deployment_bucket_force_destroy=$deployment_bucket_force_destroy -var deployment_bucket_access_control=$deployment_bucket_access_control -var index_document=$index_document -var error_document=$error_document -var origin_protocol_policy=$origin_protocol_policy -var http_port=$http_port -var https_port=$https_port -var origin_ssl_protocols=$origin_ssl_protocols -var enabled=$enabled -var is_ipv6_enabled=$is_ipv6_enabled -var default_root_object=$default_root_object -var include_cookies=$include_cookies -var prefix=$prefix -var error_caching_min_ttl=$error_caching_min_ttl -var error_code=$error_code -var response_code=$response_code -var response_page_path=$response_page_path -var allowed_methods=$allowed_methods -var cached_methods=$cached_methods -var query_string=$query_string -var forward=$forward -var viewer_protocol_policy=$viewer_protocol_policy -var min_ttl=$min_ttl -var default_ttl=$default_ttl -var max_ttl=$max_ttl -var restriction_type=$restriction_type -var cloudfront_default_certificate=$cloudfront_default_certificate -var createdBy=$createdBy -var project=$project -var projectComponent=$projectComponent -var env=$env --auto-approve
-# echo "Everything is ready...."
-# echo "::To destroy everything run"
-# echo ":: terraform destroy -auto-approve"
+echo "Processing....."
+terraform apply -var region=$region -var log_bucket_name=$log_bucket_name -var deployment_bucket_name=$deployment_bucket_name -var log_bucket_force_destroy=$log_bucket_force_destroy -var log_bucket_access_control=$log_bucket_access_control -var deployment_bucket_force_destroy=$deployment_bucket_force_destroy -var deployment_bucket_access_control=$deployment_bucket_access_control -var index_document=$index_document -var error_document=$error_document -var origin_protocol_policy=$origin_protocol_policy -var http_port=$http_port -var https_port=$https_port -var origin_ssl_protocols=$origin_ssl_protocols -var enabled=$enabled -var is_ipv6_enabled=$is_ipv6_enabled -var default_root_object=$default_root_object -var include_cookies=$include_cookies -var prefix=$prefix -var error_caching_min_ttl=$error_caching_min_ttl -var error_code=$error_code -var response_code=$response_code -var response_page_path=$response_page_path -var allowed_methods=$allowed_methods -var cached_methods=$cached_methods -var query_string=$query_string -var forward=$forward -var viewer_protocol_policy=$viewer_protocol_policy -var min_ttl=$min_ttl -var default_ttl=$default_ttl -var max_ttl=$max_ttl -var restriction_type=$restriction_type -var cloudfront_default_certificate=$cloudfront_default_certificate -var createdBy=$createdBy -var project=$project -var projectComponent=$projectComponent -var env=$env --auto-approve
+echo "Everything is ready...."
+echo "::To destroy everything run"
+echo ":: terraform destroy -auto-approve"
