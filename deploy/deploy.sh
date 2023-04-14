@@ -84,7 +84,7 @@ echo "Setting it up will take few minutes...."
 terraform apply -var resource_group_name=$resource_group_name -var region=$region -var cdn_profile_name=$cdn_profile_name -var cdn_endpoint_name=$cdn_endpoint_name -var storage_account_name=$storage_account_name -var account_kind=$account_kind -var account_tier=$account_tier -var account_replication_type=$account_replication_type -var index_document=$index_document -var cdn_sku=$cdn_sku -var origin_name=$origin_name -var createdBy=$createdBy -var project=$project -var projectComponent=$projectComponent -var env=$env --auto-approve
 
 cd ../app
-bash az storage blob upload-batch --account-name $env$storage_account_name  -s ./out -d '$web'
+bash az storage blob upload-batch --account-name $env$storage_account_name  -s ./out -d '$web' --overwrite
 
 echo "Everything is ready...."
 echo "::To destroy everything run"
