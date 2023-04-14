@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.app-btn {
+  @apply bg-blue-500;
+  @apply text-white;
+  @apply font-bold;
+  @apply py-2;
+  @apply px-4;
+  @apply mt-4;
+  @apply rounded-full;
+}
+.main-div {
+  @apply overscroll-y-contain;
+}
+.image-div {
+  @apply h-48;
+  @apply w-full;
+  @apply bg-bg-image;
+}
+.logo {
+  @apply h-48 w-full mx-auto object-contain;
+}
+.message {
+  @apply text-xl font-normal leading-normal mt-0 mb-2 text-indigo-800 flex items-center justify-center;
+}
+.terminal {
+  @apply px-5 pt-4 shadow-lg text-gray-100 text-sm font-mono subpixel-antialiased 
+    bg-gray-800  pb-6 rounded-lg leading-normal overflow-hidden;
+}
+.t-header-div {
+  @apply mb-2 flex;
+}
+.terminal-header {
+  @apply h-3 w-3 rounded-full;
+}
+.footer {
+  @apply bg-gray-400 text-gray-600  fixed inset-x-0 bottom-0 text-justify text-sm py-2;
+}
+.div-button {
+  @apply w-1/2 float-left flex items-center justify-center;
+}
+.div-terminal {
+  @apply w-1/2 float-right px-4;
+}
+.content-div {
+  @apply flex mb-4 w-full;
+}
+.links {
+  @apply flex place-content-center;
+}

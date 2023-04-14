@@ -1,6 +1,6 @@
 variable "resource_group_name" {
   type        = string
-  default     = "resource-group-angular-ping"
+  default     = "resource-group-nextjs-ping"
   description = "The name of the resource group"
 }
 variable "region" {
@@ -10,17 +10,17 @@ variable "region" {
 }
 variable "cdn_profile_name" {
   type        = string
-  default     = "cdn-profile-angular-ping"
+  default     = "cdn-profile-nextjs-ping"
   description = "The Azure CDN profile name"
 }
 variable "cdn_endpoint_name" {
   type        = string
-  default     = "cdn-endpoint-name-angular-ping"
+  default     = "cdn-endpoint-name-nextjs-ping"
   description = "The Azure CDN endpoint name"
 }
 variable "storage_account_name" {
   type = string
-  default = "kjangularstorage01"
+  default = "kjnextjsstorage01"
   description = "The name of the storage account"
 }
 variable "account_kind" {

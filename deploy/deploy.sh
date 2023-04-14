@@ -27,13 +27,13 @@ done < <(jq 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' $file | sed -e 's
 envObj=${arr[$env]}
 while IFS== read key value; do
  printf -v "$key" "$value"
-done < <(jq 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< ${!env} | sed -e 's/^"//' -e 's/"$//')
+done < <(jq 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< ${!envObj} | sed -e 's/^"//' -e 's/"$//')
 
-[[ -z "$resource_group_name" ]] && resource_group_name="resource-group-angular-ping"
+[[ -z "$resource_group_name" ]] && resource_group_name="resource-group-nextjs-ping"
 [[ -z "$region" ]] && region="East US 2"
-[[ -z "$cdn_profile_name" ]] && cdn_profile_name="cdn-profile-angular-ping"
-[[ -z "$cdn_endpoint_name" ]] && cdn_endpoint_name="cdn-endpoint-name-angular-ping"
-[[ -z "$storage_account_name" ]] && storage_account_name="kjangularstorage01"
+[[ -z "$cdn_profile_name" ]] && cdn_profile_name="cdn-profile-nextjs-ping"
+[[ -z "$cdn_endpoint_name" ]] && cdn_endpoint_name="cdn-endpoint-name-nextjs-ping"
+[[ -z "$storage_account_name" ]] && storage_account_name="kjnextjsstorage01"
 [[ -z "$account_kind" ]] && account_kind="StorageV2"
 [[ -z "$account_tier" ]] && account_tier="Standard"
 [[ -z "$account_replication_type" ]] && account_replication_type="LRS"
@@ -60,7 +60,7 @@ echo env : $env
 
 cd app
 echo "Installing dependencies..."
-npm install --legacy-peer-deps
+npm install
 echo "Building your project..."
 npm run build
 
@@ -82,7 +82,7 @@ echo "Setting it up will take few minutes...."
 terraform apply -var resource_group_name=$resource_group_name -var region=$region -var cdn_profile_name=$cdn_profile_name -var cdn_endpoint_name=$cdn_endpoint_name -var storage_account_name=$storage_account_name -var account_kind=$account_kind -var account_tier=$account_tier -var account_replication_type=$account_replication_type -var index_document=$index_document -var cdn_sku=$cdn_sku -var origin_name=$origin_name -var createdBy=$createdBy -var project=$project -var projectComponent=$projectComponent -var env=$env --auto-approve
 
 cd ../app
-bash az storage blob upload-batch --account-name $env$storage_account_name  -s ./dist -d '$web'
+bash az storage blob upload-batch --account-name $env$storage_account_name  -s ./out -d '$web'
 
 echo "Everything is ready...."
 echo "::To destroy everything run"

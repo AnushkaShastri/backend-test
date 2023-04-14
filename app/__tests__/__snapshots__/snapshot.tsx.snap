@@ -1,0 +1,146 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders homepage unchanged 1`] = `
+<div
+  className="overscroll-y-contain"
+>
+  <div
+    className="h-48 w-full bg-bg-image"
+  >
+    <img
+      alt="logo"
+      className="h-48 w-full mx-auto object-contain"
+      src="/Hero.png"
+    />
+  </div>
+  <div>
+    <div
+      className="flex mb-4 w-full"
+    >
+      <div
+        className="w-full bg-gray-400 h-8"
+      >
+        <p
+          className="text-base text-center font-medium text-gray-900"
+        >
+          About
+        </p>
+      </div>
+    </div>
+    <div>
+      <ul
+        className="flex place-content-center"
+      >
+        <li
+          className="mr-6"
+        >
+          <a
+            className="text-blue-500 hover:text-blue-800"
+            href="https://ee-designportal.s3.amazonaws.com/assets/pdfs/1_KloudJet_Overview.pdf"
+            rel="noreferrer"
+            target="_blank"
+          >
+            Kloudjet Overview
+          </a>
+        </li>
+        <li
+          className="mr-6"
+        >
+          <a
+            className="text-blue-500 hover:text-blue-800"
+            href="https://ee-designportal.s3.amazonaws.com/assets/pdfs/5_KloudJet_BuildingBlocks_DesignPortal.pdf"
+          >
+            Design Portal
+          </a>
+        </li>
+        <li
+          className="mr-6"
+        >
+          <a
+            className="text-blue-500 hover:text-blue-800"
+            href="https://ee-designportal.s3.amazonaws.com/assets/pdfs/3_KloudJet_BuildingBlocks_Template_Example.pdf"
+          >
+            Template Example
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      className="w-full mt-10 "
+    >
+      <pre
+        className="text-xl font-normal leading-normal mt-0 mb-2 text-indigo-800 flex items-center justify-center"
+      >
+        Congratulations,
+      </pre>
+      <pre
+        className="text-xl font-normal leading-normal mt-0 mb-2 text-indigo-800 flex items-center justify-center"
+      >
+        Your project is deployed successfully!!!!
+      </pre>
+      <div
+        className="w-1/2 float-left flex items-center justify-center"
+      >
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-4 rounded-full "
+          onClick={[Function]}
+          type="submit"
+        >
+          Ping
+          <span
+            aria-hidden="true"
+            className="spinner-grow spinner-grow-sm"
+            role="status"
+          />
+        </button>
+      </div>
+      <div
+        className="w-1/2 float-right px-4 "
+      >
+        <div
+          className="coding inverse-toggle px-5 pt-4 shadow-lg text-gray-100 text-sm font-mono subpixel-antialiased 
+ bg-gray-800  pb-6 rounded-lg leading-normal overflow-hidden"
+        >
+          <div
+            className="top mb-2 flex"
+          >
+            <div
+              className="h-3 w-3 bg-red-500 rounded-full"
+            />
+            <div
+              className="ml-2 h-3 w-3 bg-orange-300 rounded-full"
+            />
+            <div
+              className="ml-2 h-3 w-3 bg-green-500 rounded-full"
+            />
+          </div>
+          <div
+            className="mt-4 flex"
+          >
+            <span
+              className="text-green-400"
+            >
+              computer:~$
+            </span>
+            <pre
+              ng-bind-html="apiResponse.html"
+            >
+               Welcome 
+            </pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="bg-gray-400
+ text-gray-600 
+ fixed
+ inset-x-0
+ bottom-0
+ text-justify text-sm py-2"
+  >
+    ©2021 Impetus Technologies, Inc. All Rights Reserved
+  </div>
+</div>
+`;
