@@ -60,7 +60,7 @@ echo env : $env
 
 cd app
 echo "Installing dependencies..."
-npm install
+npm install --legacy-peer-deps
 echo "Building your project..."
 npm run build
 
