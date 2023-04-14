@@ -11,8 +11,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18.x
-      - name: Installing Serverless
-        run: npm install -g serverless
       - name: Deploying shell script
         run: bash deploy/deploy.sh file=deploy/kloudjet-configurations.json username=${{secrets.USERNAME}} password=${{secrets.PASSWORD}} tf_http_address=${{ secrets.TF_HTTP_ADDRESS }} tf_http_lock_address=${{ secrets.TF_HTTP_LOCK_ADDRESS }} tf_http_unlock_address=${{ secrets.TF_HTTP_UNLOCK_ADDRESS }} tf_http_username=${{ secrets.TF_HTTP_USERNAME }} tf_http_password=${{ secrets.TF_HTTP_PASSWORD }} env=dev createdBy=Tag project=Tag projectComponent=Tag mode=cicd
         ##
