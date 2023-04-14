@@ -30,7 +30,7 @@ while IFS== read key value; do
 done < <(jq 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< ${!envObj} | sed -e 's/^"//' -e 's/"$//')
 
 [[ -z "$resource_group_name" ]] && resource_group_name="resource-group-nextjs-ping"
-[[ -z "$region" ]] && region="East US 2"
+[[ -z "$region" ]] && region="east-us-2"
 [[ -z "$cdn_profile_name" ]] && cdn_profile_name="cdn-profile-nextjs-ping"
 [[ -z "$cdn_endpoint_name" ]] && cdn_endpoint_name="cdn-endpoint-name-nextjs-ping"
 [[ -z "$storage_account_name" ]] && storage_account_name="kjnextjsstorage01"
