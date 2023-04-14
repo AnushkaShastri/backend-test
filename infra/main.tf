@@ -1,122 +1,56 @@
-provider "aws" {
-  region = var.region
-  default_tags {
-    tags = {
+provider "azurerm" {
+  features {}
+}
+terraform {
+ backend "http" {
+    update_method = "POST"
+    lock_method = "POST"
+    unlock_method = "POST"
+ }
+}
+locals {
+  tags = {
       createdBy        = var.createdBy
       project          = var.project
       projectComponent = var.projectComponent
     }
+}
+resource "azurerm_resource_group" "rg" {
+  name     = "${var.env}-${var.resource_group_name}"
+  location = var.region
+  tags = local.tags
+}
+
+resource "azurerm_storage_account" "storage" {
+  name = "${var.env}${var.storage_account_name}"
+  resource_group_name       = azurerm_resource_group.rg.name
+  location                  = azurerm_resource_group.rg.location
+  account_kind              = var.account_kind
+  account_tier              = var.account_tier
+  account_replication_type  = var.account_replication_type
+  static_website {
+    index_document          = var.index_document
   }
-}
-terraform {
-  backend "http" {
-    update_method = "POST"
-    lock_method   = "POST"
-    unlock_method = "POST"
-  }
-}
-resource "aws_s3_bucket" "logs" {
-  bucket        = "${var.env}-${var.log_bucket_name}"
-  force_destroy = var.log_bucket_force_destroy
-}
-resource "aws_s3_bucket_acl" "log_bucket_acl" {
-  bucket = aws_s3_bucket.logs.id
-  acl    = var.log_bucket_access_control
+  tags = local.tags
 }
 
-resource "aws_s3_bucket" "deployment" {
-  bucket        = "${var.env}-${var.deployment_bucket_name}"
-  force_destroy = var.deployment_bucket_force_destroy
+resource "azurerm_cdn_profile" "cdnprofile" {
+  name                = "${var.env}-${var.cdn_profile_name}"
+  location            = var.region
+  resource_group_name = azurerm_resource_group.rg.name
+  sku = var.cdn_sku
+  tags = local.tags
 }
 
-resource "aws_s3_bucket_acl" "deployment_bucket_acl" {
-  bucket = aws_s3_bucket.deployment.id
-  acl    = var.deployment_bucket_access_control
-}
-
-resource "aws_s3_bucket_website_configuration" "web_config" {
-  bucket = aws_s3_bucket.deployment.bucket
-  index_document {
-    suffix = var.index_document
-  }
-  error_document {
-    key = var.error_document
-  }
-}
-
-resource "aws_s3_bucket_policy" "allow_access" {
-  bucket = aws_s3_bucket.deployment.id
-  policy = data.aws_iam_policy_document.allow_access.json
-}
-
-data "aws_iam_policy_document" "allow_access" {
-  statement {
-    sid = "AllowPublicRead"
-    principals {
-      type        = "AWS"
-      identifiers = ["*"]
-    }
-    actions = [
-      "s3:GetObject",
-    ]
-    resources = [
-      "${aws_s3_bucket.deployment.arn}/*",
-    ]
-  }
-}
-
-resource "aws_cloudfront_distribution" "distribution" {
+resource "azurerm_cdn_endpoint" "cdn" {
+  name                = "${var.env}-${var.cdn_endpoint_name}"
+  profile_name        = azurerm_cdn_profile.cdnprofile.name
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  origin_host_header = azurerm_storage_account.storage.primary_web_host
+  tags = local.tags
   origin {
-    domain_name = aws_s3_bucket.deployment.bucket_regional_domain_name
-    origin_id   = "S3-${aws_s3_bucket.deployment.bucket}"
-
-    custom_origin_config {
-      origin_protocol_policy = var.origin_protocol_policy
-      http_port              = var.http_port
-      https_port             = var.https_port
-      origin_ssl_protocols   = var.origin_ssl_protocols
-    }
-  }
-  enabled             = var.enabled
-  is_ipv6_enabled     = var.is_ipv6_enabled
-  default_root_object = var.default_root_object
-
-  logging_config {
-    include_cookies = var.include_cookies
-    prefix          = var.prefix
-    bucket          = aws_s3_bucket.logs.bucket_domain_name
-  }
-
-  custom_error_response {
-    error_caching_min_ttl = var.error_caching_min_ttl
-    error_code            = var.error_code
-    response_code         = var.response_code
-    response_page_path    = var.response_page_path
-  }
-  default_cache_behavior {
-    allowed_methods  = var.allowed_methods
-    cached_methods   = var.cached_methods
-    target_origin_id = "S3-${aws_s3_bucket.deployment.bucket}"
-    forwarded_values {
-      query_string = var.query_string
-      cookies {
-        forward = var.forward
-      }
-    }
-    viewer_protocol_policy = var.viewer_protocol_policy
-    min_ttl                = var.min_ttl
-    default_ttl            = var.default_ttl
-    max_ttl                = var.max_ttl
-  }
-
-  restrictions {
-    geo_restriction {
-      restriction_type = var.restriction_type
-    }
-  }
-
-
-  viewer_certificate {
-    cloudfront_default_certificate = var.cloudfront_default_certificate
+    name = var.origin_name
+    host_name = azurerm_storage_account.storage.primary_web_host
   }
 }

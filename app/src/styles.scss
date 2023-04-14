@@ -1,19 +1,8 @@
-@tailwind base;
+/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
-/* Your own custom base styles */
-
-/* Start purging... */
-@tailwind components;
-/* Stop purging. */
-
-/* Your own custom component styles */
-
-/* Start purging... */
-@tailwind utilities;
-/* Stop purging. */
-
-/* Your own custom utilities */
-/* @layer components{ */
 .main-div {
     @apply overscroll-y-contain;
 }
@@ -86,5 +75,3 @@
 .custom-terminal-role{
     @apply text-green-400;
 }
-
-/* } */

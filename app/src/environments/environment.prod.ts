@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  PING_API:"<PING API URL>"
+  PING_API: 'API PING',
 };
