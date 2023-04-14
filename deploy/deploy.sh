@@ -27,7 +27,7 @@ done < <(jq 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' $file | sed -e 's
 envObj=${arr[$env]}
 while IFS== read key value; do
  printf -v "$key" "$value"
-done < <(jq 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< ${!envObj} | sed -e 's/^"//' -e 's/"$//')
+done < <(jq 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< ${!env} | sed -e 's/^"//' -e 's/"$//')
 
 [[ -z "$resource_group_name" ]] && resource_group_name="resource-group-angular-ping"
 [[ -z "$region" ]] && region="East US 2"
