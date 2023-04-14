@@ -68,6 +68,8 @@ cd ../infra
 
 echo "Azure Login..."
 az login -u $username -p $password
+set AZURE_USERNAME=$username
+set AZURE_PASSWORD=$password
 
 echo "Setting terraform backend environment variables..."
 export TF_HTTP_ADDRESS=$tf_http_address/$env
