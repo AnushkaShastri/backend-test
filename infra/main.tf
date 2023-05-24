@@ -29,6 +29,7 @@ locals {
   permissions_boundary = var.permissions_boundary == "null" ? null : var.permissions_boundary
   encryption_type = var.encryption_type == "null" ? null : var.encryption_type
   kms_key = var.kms_key == "null" ? null : var.kms_key
+  connection_arn = var.connection_arn == "null" ? null : var.connection_arn
   code_repository = var.code_repository == false ? [] : [{}]
   build_command = var.build_command == "null" ? null : var.build_command
   apprunner_port = var.apprunner_port == "null" ? null : var.apprunner_port
@@ -42,6 +43,7 @@ locals {
   image_runtime_environment_secrets = var.image_runtime_environment_secrets == "null" ? null : var.image_runtime_environment_secrets
   image_runtime_environment_variables = var.image_runtime_environment_variables == "null" ? null : var.image_runtime_environment_variables
   image_start_command = var.image_start_command == "null" ? null : var.image_start_command
+  auto_scaling_configuration_arn = var.auto_scaling_configuration_arn == "null" ? null :var.auto_scaling_configuration_arn
   encryption_kms_key = var.encryption_kms_key == "null" ? null : var.encryption_kms_key
   instance_role_arn = var.instance_role_arn == "null" ? null : var.instance_role_arn
   # egress_type = var.egress_type == "null" ? null : var.egress_type
@@ -165,7 +167,7 @@ resource "aws_apprunner_service" "app_node_ping" {
   source_configuration {
     authentication_configuration{
       access_role_arn = aws_iam_role.role.arn
-      connection_arn = var.connection_arn
+      connection_arn = local.connection_arn
     }
     auto_deployments_enabled = var.auto_deployments_enabled
     dynamic "code_repository" {
@@ -203,7 +205,7 @@ resource "aws_apprunner_service" "app_node_ping" {
       }
     }
   }
-  auto_scaling_configuration_arn = var.auto_scaling_configuration_arn
+  auto_scaling_configuration_arn = local.auto_scaling_configuration_arn
   encryption_configuration {
     kms_key = local.encryption_kms_key
   }
