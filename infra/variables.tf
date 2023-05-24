@@ -90,7 +90,7 @@ variable "managed_policy_arns" {
 
 variable "max_session_duration" {
   type = number
-  default = null
+  default = 1
   description = "Maximum session duration (in seconds) that you want to set for the specified role, if you do not specify a value for this setting, the default maximum of one hour is applied, this setting can have a value from 1 hour to 12 hours"
 }
 
