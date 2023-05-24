@@ -1,7 +1,7 @@
 {
     "dev" : {
-        "region" : "us-east-1",
-        "vpc_id" : "",
+        "region" : "us-west-1",
+        "vpc_id" : "vpc-f9ea1e9f",
         "reponame" : "kj-nodejs-eks-repo",
         "image_tag_mutability" : "IMMUTABLE",
         "force_delete" : true,

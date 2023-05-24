@@ -43,7 +43,7 @@ while IFS== read key value; do
  printf -v "$key" "%s" "$value"
 done < <(jq 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< ${!envObj} | sed -e 's/^"//' -e 's/"$//')
 
-[[ -z "$region" ]] && region="us-east-1"
+[[ -z "$region" ]] && region="us-west-1"
 [[ -z "$vpc_id" ]] && echo "VPC Id is required" && exit 1
 [[ -z "$reponame" ]] && reponame="kj-nodejs-eks-repo"
 [[ -z "$image_tag_mutability" ]] && image_tag_mutability="IMMUTABLE"
