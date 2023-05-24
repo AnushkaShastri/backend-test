@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:12.13-alpine
 COPY package*.json ./
 RUN npm install --only=production
 COPY . .

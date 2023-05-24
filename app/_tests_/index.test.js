@@ -11,7 +11,7 @@ describe('Sample Test', () => {
     })
     it('should fetch a single post', async () => {
         
-        let resp = await request(app).get("/api/ping");
+        let resp = await request(app).get("/service/ping");
       
          expect(resp.body).toEqual({ status: 200, message: 'Ping Successful!!' })
         console.log(resp.body);

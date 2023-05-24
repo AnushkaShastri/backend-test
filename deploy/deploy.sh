@@ -43,147 +43,146 @@ while IFS== read key value; do
  printf -v "$key" "%s" "$value"
 done < <(jq 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< ${!envObj} | sed -e 's/^"//' -e 's/"$//')
 
-[[ -z "$region" ]] && region="us-east-1" 
-[[ -z "$iam_policy_name" ]] && iam_policy_name="kloudjet-node-app-iam-policy"
-[[ -z "$iam_policy_prefix" ]] && iam_policy_prefix="null"
-[[ -z "$iam_role_description" ]] && iam_role_description="null"
-[[ -z "$iam_role_name" ]] && iam_role_name="kloudjet-node-app-iam-role"
-[[ -z "$force_detach_policies" ]] && force_detach_policies="true"
-[[ -z "$inline_policy" ]] && inline_policy="null"
-[[ -z "$managed_policy_arns" ]] && managed_policy_arns="null"
-[[ -z "$max_session_duration" ]] && max_session_duration="1"
-[[ -z "$iam_role_prefix" ]] && iam_role_prefix="null"
-[[ -z "$iam_role_path" ]] && iam_role_path="null"
-[[ -z "$permissions_boundary" ]] && permissions_boundary="null"
-[[ -z "$iam_role_tags" ]] && iam_role_tags="{}"
-[[ -z "$reponame" ]] && reponame="kloudjet-node-app-repo"
-[[ -z "$encryption_type" ]] && encryption_type="null"
-[[ -z "$kms_key" ]] && kms_key="null"
-[[ -z "$force_delete" ]] && force_delete="true"
+[[ -z "$region" ]] && region="us-east-1"
+[[ -z "$vpc_id" ]] && echo "VPC Id is required" && exit 1
+[[ -z "$reponame" ]] && reponame="kj-nodejs-eks-repo"
 [[ -z "$image_tag_mutability" ]] && image_tag_mutability="IMMUTABLE"
-[[ -z "$scan_on_push" ]] && scan_on_push="false"
-[[ -z "$ecr_tags" ]] && ecr_tags="{}"
-[[ -z "$apprunner_service_name" ]] && apprunner_service_name="kloudjet-node-app-ping"
-[[ -z "$connection_arn" ]] && connection_arn="null"
-[[ -z "$auto_deployments_enabled" ]] && auto_deployments_enabled="false"
-[[ -z "$code_repository" ]] && code_repository="false"
-[[ -z "$build_command" ]] && build_command="null"
-[[ -z "$apprunner_port" ]] && apprunner_port="null"
-[[ -z "$runtime" ]] && runtime="null"
-[[ -z "$runtime_environment_secrets" ]] && runtime_environment_secrets="{}"
-[[ -z "$runtime_environment_variables" ]] && runtime_environment_variables="{}"
-[[ -z "$start_command" ]] && start_command="null"
-[[ -z "$configuration_source" ]] && configuration_source="null"
-[[ -z "$repository_url" ]] && repository_url="null"
-[[ -z "$source_code_type" ]] && source_code_type="null"
-[[ -z "$source_code_value" ]] && source_code_value="null"
-[[ -z "$image_repository" ]] && image_repository="true"
-[[ -z "$port" ]] && port="8080"
-[[ -z "$image_runtime_environment_secrets" ]] && image_runtime_environment_secrets="{}"
-[[ -z "$image_runtime_environment_variables" ]] && image_runtime_environment_variables="{}"
-[[ -z "$image_start_command" ]] && image_start_command="null"
-[[ -z "$image_tag" ]] && image_tag="latest"
-[[ -z "$image_repository_type" ]] && image_repository_type="ECR"
-[[ -z "$auto_scaling_configuration_arn" ]] && auto_scaling_configuration_arn="null"
-[[ -z "$encryption_kms_key" ]] && encryption_kms_key=""
-[[ -z "$healthy_threshold" ]] && healthy_threshold="1"
-[[ -z "$interval" ]] && interval="5"
-[[ -z "$health_path" ]] && health_path="/"
-[[ -z "$health_protocol" ]] && health_protocol="TCP"
-[[ -z "$health_timeout" ]] && health_timeout="2"
-[[ -z "$unhealthy_threshold" ]] && unhealthy_threshold="5"
-[[ -z "$instance_cpu" ]] && instance_cpu="1024"
-[[ -z "$instance_role_arn" ]] && instance_role_arn="null"
-[[ -z "$instance_memory" ]] && instance_memory="2048"
-[[ -z "$is_publicly_accessible" ]] && is_publicly_accessible="true"
-[[ -z "$egress_type" ]] && egress_type="DEFAULT"
-[[ -z "$vpc_connector_arn" ]] && vpc_connector_arn="null"
-[[ -z "$observability_enabled" ]] && observability_enabled="false"
-[[ -z "$observability_configuration_arn" ]] && observability_configuration_arn="null"
-[[ -z "$apprunner_tags" ]] && apprunner_tags="{}"
-
-echo "Following values will be used for deployment..."
+[[ -z "$force_delete" ]] && force_delete="true"
+[[ -z "$egress_from_port" ]] && egress_from_port="0"
+[[ -z "$egress_to_port" ]] && egress_to_port="0"
+[[ -z "$egress_protocol" ]] && egress_protocol="-1"
+[[ -z "$egress_cidr_blocks" ]] && egress_cidr_blocks="[\"0.0.0.0/0\"]"
+[[ -z "$sg_from_port" ]] && sg_from_port="443"
+[[ -z "$sg_protocol" ]] && sg_protocol="tcp"
+[[ -z "$sg_to_port" ]] && sg_to_port="443"
+[[ -z "$sg_type" ]] && sg_type="ingress"
+[[ -z "$cluster_name" ]] && cluster_name="K8_Cluster"
+[[ -z "$node_group_name" ]] && node_group_name="k8_cluster"
+[[ -z "$instance_type" ]] && instance_type="t3.medium"
+[[ -z "$desired_capacity" ]] && desired_capacity="1"
+[[ -z "$max_capacity" ]] && max_capacity="2"
+[[ -z "$min_capacity" ]] && min_capacity="1"
+[[ -z "$lbControllerRoleName" ]] && lbControllerRoleName="AmazonEKSLoadBalancerControllerRole"
+[[ -z "$loadBalancerControllerPolicy" ]] && loadBalancerControllerPolicy="AWSLoadBalancerControllerIAMPolicy"
+[[ -z "$origin_protocol_policy" ]] && origin_protocol_policy="http-only"
+[[ -z "$http_port" ]] && http_port="80"
+[[ -z "$https_port" ]] && https_port="443"
+[[ -z "$origin_ssl_protocols" ]] && origin_ssl_protocols="[\"TLSv1.2\"]"
+[[ -z "$enabled" ]] && enabled="true"
+[[ -z "$allowed_methods" ]] && allowed_methods="[\"DELETE\",\"GET\",\"HEAD\",\"OPTIONS\",\"PATCH\",\"POST\",\"PUT\"]"
+[[ -z "$cached_methods" ]] && cached_methods="[\"GET\",\"HEAD\",\"OPTIONS\"]"
+[[ -z "$viewer_protocol_policy" ]] && viewer_protocol_policy="allow-all"
+[[ -z "$query_string" ]] && query_string="false"
+[[ -z "$forward" ]] && forward="none"
+[[ -z "$restriction_type" ]] && restriction_type="none"
+[[ -z "$cloudfront_default_certificate" ]] && cloudfront_default_certificate="true"
+[[ -z "$namespace" ]] && namespace="default"
+[[ -z "$replicas" ]] && replicas="2"
 
 echo region : $region
-echo iam_policy_name : $iam_policy_name
-echo iam_policy_prefix : $iam_policy_prefix
-echo iam_role_description : $iam_role_description
-echo iam_role_name : $iam_role_name
-echo force_detach_policies : $force_detach_policies
-echo inline_policy : $inline_policy
-echo managed_policy_arns : $managed_policy_arns
-echo max_session_duration : $max_session_duration
-echo iam_role_prefix : $iam_role_prefix
-echo iam_role_path : $iam_role_path
-echo permissions_boundary : $permissions_boundary
-echo iam_role_tags : $iam_role_tags
+echo vpc_id : $vpc_id
 echo reponame : $reponame
-echo encryption_type : $encryption_type
-echo kms_key : $kms_key
-echo force_delete : $force_delete
 echo image_tag_mutability : $image_tag_mutability
-echo scan_on_push : $scan_on_push
-echo ecr_tags : $ecr_tags
-echo apprunner_service_name : $apprunner_service_name
-echo connection_arn : $connection_arn
-echo auto_deployments_enabled : $auto_deployments_enabled
-echo code_repository : $code_repository
-echo build_command : $build_command
-echo apprunner_port : $apprunner_port
-echo runtime : $runtime
-echo runtime_environment_secrets : $runtime_environment_secrets
-echo runtime_environment_variables : $runtime_environment_variables
-echo start_command : $start_command
-echo configuration_source : $configuration_source
-echo repository_url : $repository_url
-echo source_code_type : $source_code_type
-echo source_code_value : $source_code_value
-echo image_repository : $image_repository
-echo port : $port
-echo image_runtime_environment_secrets : $image_runtime_environment_secrets
-echo image_runtime_environment_variables : $image_runtime_environment_variables
-echo image_start_command : $image_start_command
-echo image_tag : $image_tag
-echo image_repository_type : $image_repository_type
-echo auto_scaling_configuration_arn : $auto_scaling_configuration_arn
-echo encryption_kms_key : $encryption_kms_key
-echo healthy_threshold : $healthy_threshold
-echo interval : $interval
-echo health_path : $health_path
-echo health_protocol : $health_protocol
-echo health_timeout : $health_timeout
-echo unhealthy_threshold : $unhealthy_threshold
-echo instance_cpu : $instance_cpu
-echo instance_role_arn : $instance_role_arn
-echo instance_memory : $instance_memory
-echo is_publicly_accessible : $is_publicly_accessible
-echo egress_type : $egress_type
-echo vpc_connector_arn : $vpc_connector_arn
-echo observability_enabled : $observability_enabled
-echo observability_configuration_arn : $observability_configuration_arn
-echo apprunner_tags : $apprunner_tags 
+echo force_delete : $force_delete
+echo egress_from_port : $egress_from_port
+echo egress_to_port : $egress_to_port
+echo egress_protocol : $egress_protocol
+echo egress_cidr_blocks : $egress_cidr_blocks
+echo sg_from_port : $sg_from_port
+echo sg_protocol : $sg_protocol
+echo sg_to_port : $sg_to_port
+echo sg_type : $sg_type
+echo cluster_name : $cluster_name
+echo node_group_name : $node_group_name
+echo instance_type : $instance_type
+echo desired_capacity : $desired_capacity
+echo max_capacity : $max_capacity
+echo min_capacity : $min_capacity
+echo lbControllerRoleName : $lbControllerRoleName
+echo loadBalancerControllerPolicy : $loadBalancerControllerPolicy
+echo origin_protocol_policy : $origin_protocol_policy
+echo http_port : $http_port
+echo https_port : $https_port
+echo origin_ssl_protocols : $origin_ssl_protocols
+echo enabled : $enabled
+echo allowed_methods : $allowed_methods
+echo cached_methods : $cached_methods
+echo viewer_protocol_policy : $viewer_protocol_policy
+echo query_string : $query_string
+echo forward : $forward
+echo restriction_type : $restriction_type
+echo cloudfront_default_certificate : $cloudfront_default_certificate
+echo namespace : $namespace
+echo replicas : $replicas
+
+echo "Configuring AWS..."
+aws configure set aws_access_key_id $access_key && aws configure set aws_secret_access_key $secret_key && aws configure set region $region
 
 cd infra
-echo "Configuring AWS..."
-aws configure set aws_access_key_id $access_key && aws configure set aws_secret_access_key $secret_key && aws configure set default.region $region
+terraform init
+terraform apply -target=aws_ecr_repository.app_container_ecr_repo -target=aws_ecr_repository_policy.app_container_ecr_repo_policy -target=aws_iam_role.k8_cluster -target=aws_iam_role_policy_attachment.k8_cluster-AmazonEKSClusterPolicy -target=aws_iam_role_policy_attachment.k8_cluster-AmazonEKSVPCResourceController -target=aws_security_group.k8_cluster -target=aws_security_group_rule.k8_cluster-ingress-workstation-https -target=aws_eks_cluster.k8_cluster -target=aws_iam_openid_connect_provider.cluster -target=aws_iam_role.k8_cluster-node -target=aws_iam_role_policy_attachment.k8_cluster-node-AmazonEKSWorkerNodePolicy -target=aws_iam_role_policy_attachment.k8_cluster-node-AmazonEKS_CNI_Policy -target=aws_iam_role_policy_attachment.k8_cluster-node-AmazonEC2ContainerRegistryReadOnly -target=aws_eks_node_group.k8_cluster -var region=$region -var vpc_id=$vpc_id -var reponame=$reponame -var image_tag_mutability=$image_tag_mutability -var force_delete=$force_delete -var egress_from_port=$egress_from_port -var egress_to_port=$egress_to_port -var egress_protocol=$egress_protocol -var egress_cidr_blocks=$egress_cidr_blocks -var sg_from_port=$sg_from_port -var sg_protocol=$sg_protocol -var sg_to_port=$sg_to_port -var sg_type=$sg_type -var cluster_name=$cluster_name -var node_group_name=$node_group_name -var instance_type=$instance_type -var desired_capacity=$desired_capacity -var max_capacity=$max_capacity -var min_capacity=$min_capacity -var env=$env -var createdBy=$createdBy -var project=$project -var projectComponent=$projectComponent --auto-approve
 
-echo "Initializing..."
-terraform init -reconfigure
-
-echo "Setting it up will take few minutes...."
-terraform apply -target=aws_iam_role.role -target=aws_iam_role_policy.app_policy -target=aws_ecr_repository.app_container_ecr_repo -target=aws_ecr_repository_policy.app_container_ecr_repo_policy -var region=$region -var iam_policy_name=$iam_policy_name -var iam_policy_prefix=$iam_policy_prefix -var iam_role_description=$iam_role_description -var iam_role_name=$iam_role_name -var force_detach_policies=$force_detach_policies -var inline_policy=$inline_policy -var managed_policy_arns=$managed_policy_arns -var max_session_duration=$max_session_duration -var iam_role_prefix=$iam_role_prefix -var iam_role_path=$iam_role_path -var permissions_boundary=$permissions_boundary -var iam_role_tags=$iam_role_tags -var reponame=$reponame -var encryption_type=$encryption_type -var kms_key=$kms_key -var force_delete=$force_delete -var image_tag_mutability=$image_tag_mutability -var scan_on_push=$scan_on_push -var ecr_tags=$ecr_tags -var env=$env -var createdBy=$createdBy -var project=$project -var projectComponent=$projectComponent -auto-approve
-
-echo "Processing....."
 aws ecr get-login-password --region $region | docker login --username AWS --password-stdin $accid.dkr.ecr.$region.amazonaws.com
-
 cd ../app
-docker build -t $env-$reponame .
-docker tag $env-$reponame:$image_tag $accid.dkr.ecr.$region.amazonaws.com/$env-$reponame:$image_tag
-docker push $accid.dkr.ecr.$region.amazonaws.com/$env-$reponame:$image_tag
+docker build -t $env-$reponame . 
+docker tag $env-$reponame:latest $accid.dkr.ecr.$region.amazonaws.com/$env-$reponame:latest
+docker push $accid.dkr.ecr.$region.amazonaws.com/$env-$reponame:latest
+
+oidc=$(aws eks describe-cluster --name "$env"_"$cluster_name" --region $region --query "cluster.identity.oidc.issuer" --output text)
+oidc=$(echo $oidc | xargs | awk -F '://' '{print $2}' )
 
 cd ../infra
-terraform apply -target=aws_apprunner_service.app_node_ping -var region=$region -var iam_policy_name=$iam_policy_name -var iam_policy_prefix=$iam_policy_prefix -var iam_role_description=$iam_role_description -var iam_role_name=$iam_role_name -var force_detach_policies=$force_detach_policies -var inline_policy=$inline_policy -var managed_policy_arns=$managed_policy_arns -var max_session_duration=$max_session_duration -var iam_role_prefix=$iam_role_prefix -var iam_role_path=$iam_role_path -var permissions_boundary=$permissions_boundary -var iam_role_tags=$iam_role_tags -var reponame=$reponame -var encryption_type=$encryption_type -var kms_key=$kms_key -var force_delete=$force_delete -var image_tag_mutability=$image_tag_mutability -var scan_on_push=$scan_on_push -var ecr_tags=$ecr_tags -var apprunner_service_name=$apprunner_service_name -var connection_arn=$connection_arn -var auto_deployments_enabled=$auto_deployments_enabled -var code_repository=$code_repository -var build_command=$build_command -var apprunner_port=$apprunner_port -var runtime=$runtime -var runtime_environment_secrets=$runtime_environment_secrets -var runtime_environment_variables=$runtime_environment_variables -var start_command=$start_command -var configuration_source=$configuration_source -var repository_url=$repository_url -var source_code_type=$source_code_type -var source_code_value=$source_code_value -var image_repository=$image_repository -var port=$port -var image_runtime_environment_secrets=$image_runtime_environment_secrets -var image_runtime_environment_variables=$image_runtime_environment_variables -var image_start_command=$image_start_command -var image_tag=$image_tag -var image_repository_type=$image_repository_type -var auto_scaling_configuration_arn=$auto_scaling_configuration_arn -var encryption_kms_key=$encryption_kms_key -var healthy_threshold=$healthy_threshold -var interval=$interval -var health_path=$health_path -var health_protocol=$health_protocol -var health_timeout=$health_timeout -var unhealthy_threshold=$unhealthy_threshold -var instance_cpu=$instance_cpu -var instance_role_arn=$instance_role_arn -var instance_memory=$instance_memory -var is_publicly_accessible=$is_publicly_accessible -var egress_type=$egress_type -var vpc_connector_arn=$vpc_connector_arn -var observability_enabled=$observability_enabled -var observability_configuration_arn=$observability_configuration_arn -var apprunner_tags=$apprunner_tags -var env=$env -var createdBy=$createdBy -var project=$project -var projectComponent=$projectComponent -auto-approve
+terraform apply -target=aws_iam_role.AmazonEKSLoadBalancerControllerRole -target=aws_iam_policy.load_balancer_controller -target=aws_iam_role_policy_attachment.attach -var region=$region -var lbControllerRoleName=$lbControllerRoleName -var accid=$accid -var oidc=$oidc -var loadBalancerControllerPolicy=$loadBalancerControllerPolicy -var env=$env -var createdBy=$createdBy -var project=$project -var projectComponent=$projectComponent --auto-approve
 
-echo "Everything is ready...."
-echo "::To destroy everything run"
-echo ":: terraform destroy -auto-approve"
+cat > aws-load-balancer-controller-service-account.yaml << EOF
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/name: aws-load-balancer-controller
+  name: aws-load-balancer-controller
+  namespace: kube-system
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::${accid}:role/${env}-${lbControllerRoleName}
+EOF
+
+[ ! -d "$HOME/.kube" ] && mkdir $HOME/.kube
+aws eks update-kubeconfig --region $region --name "$env"_"$cluster_name"
+
+export KUBECONFIG=$HOME/.kube/config
+
+kubectl apply -f aws-load-balancer-controller-service-account.yaml
+
+helm repo add eks https://aws.github.io/eks-charts
+
+helm repo update
+
+helm upgrade --install aws-load-balancer-controller eks/aws-load-balancer-controller \
+  -n kube-system \
+  --set clusterName="$env"_"$cluster_name" \
+  --set serviceAccount.create=false \
+  --set serviceAccount.name=aws-load-balancer-controller
+
+cd ../deploy
+
+sed -i "s/image: .*/image: ${accid}.dkr.ecr.${region}.amazonaws.com\/${env}-${reponame}:latest/" deployment.yaml
+sed -i "s/replicas: .*/replicas: ${replicas}/" deployment.yaml
+
+#create namespace if does not exist
+ns_exists=$(kubectl get ns | grep -w $namespace)
+
+if [[ -z "$ns_exists" ]]; then 
+kubectl create namespace $namespace
+else
+echo "Namespace already exists"
+fi
+
+kubectl apply -f deployment.yaml -n $namespace
+kubectl apply -f service.yaml -n $namespace 
+kubectl apply -f ingress.yaml -n $namespace
+sleep 60
+address=$(kubectl get ingress nodejs-ingress -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
+
+cd ../infra
+terraform apply -target=aws_cloudfront_distribution.distribution -var region=$region -var address=$address -var origin_protocol_policy=$origin_protocol_policy -var http_port=$http_port -var https_port=$https_port -var origin_ssl_protocols=$origin_ssl_protocols -var enabled=$enabled -var allowed_methods=$allowed_methods -var cached_methods=$cached_methods -var viewer_protocol_policy=$viewer_protocol_policy -var restriction_type=$restriction_type -var cloudfront_default_certificate=$cloudfront_default_certificate -var env=$env -var createdBy=$createdBy -var project=$project -var projectComponent=$projectComponent --auto-approve
