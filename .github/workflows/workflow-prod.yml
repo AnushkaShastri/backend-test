@@ -1,0 +1,21 @@
+name: aws-tf-python-app-runner
+run-name: Executing pipeline for Python Django App Runner component
+on:
+  push:
+    branches:
+      - master
+jobs:
+  Python-App-Runner-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python 
+        uses: actions/setup-python@v2
+        with:
+           python-version: 3.8
+      - name: Deploying shell script
+        run:
+          bash deploy/deploy.sh file=deploy/kloudjet-configurations.json access_key=${{ secrets.ACCESS_KEY }} secret_key=${{ secrets.SECRET_KEY }} tf_http_address=${{ secrets.TF_HTTP_ADDRESS }} accid=${{ secrets.ACCID}}
+          tf_http_lock_address=${{ secrets.TF_HTTP_LOCK_ADDRESS }} tf_http_unlock_address=${{ secrets.TF_HTTP_UNLOCK_ADDRESS }} tf_http_username=${{ secrets.TF_HTTP_USERNAME }} tf_http_password=${{ secrets.TF_HTTP_PASSWORD }} env=prod
+           createdBy=kloudjet project=b22f42f4-d78a-4b3d-bd75-9b336c07dfef projectComponent=2d18f324-3326-4d21-96f5-e99ba831d2fa mode="cicd"
+
