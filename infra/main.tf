@@ -185,7 +185,8 @@ resource "aws_instance" "instance" {
       hostname_type                        = lookup(private_dns_name_options.value, "hostname_type", null)
     }
   }
-  private_ip = length(var.private_ips) > 0 ? element(var.private_ips, count.index) : local.private_ip
+  # private_ip = length(var.private_ips) > 0 ? element(var.private_ips, count.index) : local.private_ip
+  private_ip = local.private_ip
   dynamic "root_block_device" {
     for_each = var.root_block_device
     content {
