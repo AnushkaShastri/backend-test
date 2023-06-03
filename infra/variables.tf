@@ -61,7 +61,7 @@ variable "ingress_cidr_blocks" {
 variable "ingress_rules" {
   description = "List of ingress rules to create by name"
   type        = list(string)
-  default     = ["http-80-tcp", "all-icmp", "ssh-tcp"]
+  default     = ["http-80-tcp","all-icmp","ssh-tcp"]
 }
 
 variable "egress_rules" {
