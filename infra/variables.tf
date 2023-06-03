@@ -70,11 +70,11 @@ variable "egress_rules" {
   default     = ["all-all"]
 }
 
-variable "instance_count" {
-  description = "Number of EC2 instances to launch"
-  type        = string
-  default     = 1
-}
+# variable "instance_count" {
+#   description = "Number of EC2 instances to launch"
+#   type        = string
+#   default     = 1
+# }
 
 variable "associate_public_ip_address" {
   description = "If true, the EC2 instance will have associated public IP address"
@@ -340,11 +340,11 @@ variable "volume_tags" {
   default     = {}
 }
 
-variable "volume_attachment_count" {
-  description = "Used in count for indexing and obtaining argument values in aws_volume_attachment and aws_ebs_volume resources"
-  type        = string
-  default     = 1
-}
+# variable "volume_attachment_count" {
+#   description = "Used in count for indexing and obtaining argument values in aws_volume_attachment and aws_ebs_volume resources"
+#   type        = string
+#   default     = 1
+# }
 
 variable "aws_volume_attachment_device" {
   description = "The device name to expose to the instance"

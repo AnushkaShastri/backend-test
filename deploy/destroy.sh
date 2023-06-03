@@ -50,7 +50,7 @@ done < <(jq 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< ${!envObj} | 
 [[ -z "$ingress_cidr_blocks" ]] && ingress_cidr_blocks="[\"0.0.0.0/0\"]" 
 [[ -z "$ingress_rules" ]] && ingress_rules="[\"http-80-tc\",\"all-icm\",\"ssh-tcp\"]" 
 [[ -z "$egress_rules" ]] && egress_rules="[\"all-all\"]" 
-[[ -z "$instance_count" ]] && instance_count="1" 
+# [[ -z "$instance_count" ]] && instance_count="1" 
 [[ -z "$associate_public_ip_address" ]] && associate_public_ip_address="true" 
 [[ -z "$availability_zone" ]] && availability_zone="null" 
 [[ -z "$capacity_reservation_specification" ]] && capacity_reservation_specification={} 
@@ -95,7 +95,7 @@ done < <(jq 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< ${!envObj} | 
 [[ -z "$user_data_base64" ]] && user_data_base64="null" 
 [[ -z "$user_data_replace_on_change" ]] && user_data_replace_on_change="null" 
 [[ -z "$volume_tags" ]] && volume_tags={} 
-[[ -z "$volume_attachment_count" ]] && volume_attachment_count="1" 
+# [[ -z "$volume_attachment_count" ]] && volume_attachment_count="1" 
 [[ -z "$aws_volume_attachment_device" ]] && aws_volume_attachment_device="xvdh" 
 [[ -z "$volume_force_detach" ]] && volume_force_detach="false" 
 [[ -z "$skip_destroy" ]] && skip_destroy="false" 
@@ -122,7 +122,7 @@ echo vpc_id : $vpc_id
 echo ingress_cidr_blocks : $ingress_cidr_blocks
 echo ingress_rules : $ingress_rules
 echo egress_rules : $egress_rules
-echo instance_count : $instance_count
+# echo instance_count : $instance_count
 echo associate_public_ip_address : $associate_public_ip_address
 echo availability_zone : $availability_zone
 echo capacity_reservation_specification : $capacity_reservation_specification
@@ -167,7 +167,7 @@ echo user_data : $user_data
 echo user_data_base64 : $user_data_base64
 echo user_data_replace_on_change : $user_data_replace_on_change
 echo volume_tags : $volume_tags
-echo volume_attachment_count : $volume_attachment_count
+# echo volume_attachment_count : $volume_attachment_count
 echo aws_volume_attachment_device : $aws_volume_attachment_device
 echo volume_force_detach : $volume_force_detach
 echo skip_destroy : $skip_destroy
@@ -196,5 +196,5 @@ echo "Initializing..."
 terraform init -reconfigure
 
 echo "Destruction of resources will take few minutes..."
-terraform destroy -var region=$region -var ami_id=$ami_id -var security_group_name=$security_group_name -var sg_description=$sg_description -var vpc_id=$vpc_id -var ingress_cidr_blocks=$ingress_cidr_blocks -var ingress_rules=$ingress_rules -var egress_rules=$egress_rules -var instance_count=$instance_count -var associate_public_ip_address=$associate_public_ip_address -var availability_zone=$availability_zone -var capacity_reservation_specification=$capacity_reservation_specification -var cpu_options=$cpu_options -var credit_specification=$credit_specification -var disable_api_stop=$disable_api_stop -var disable_api_termination=$disable_api_termination -var ebs_block_device=$ebs_block_device -var ebs_optimized=$ebs_optimized -var enclave_options=$enclave_options -var ephemeral_block_device=$ephemeral_block_device -var get_password_data=$get_password_data -var hibernation=$hibernation -var host_id=$host_id -var host_resource_group_arn=$host_resource_group_arn -var iam_instance_profile=$iam_instance_profile -var instance_initiated_shutdown_behavior=$instance_initiated_shutdown_behavior -var instance_type=$instance_type -var ipv6_address_count=$ipv6_address_count -var ipv6_addresses=$ipv6_addresses -var key_name=$key_name -var launch_template=$launch_template -var maintenance_options=$maintenance_options -var metadata_options=$metadata_options -var monitoring=$monitoring -var network_interface=$network_interface -var placement_group=$placement_group -var placement_partition_number=$placement_partition_number -var private_dns_name_options=$private_dns_name_options -var private_ips=$private_ips -var private_ip=$private_ip -var root_block_device=$root_block_device -var secondary_private_ips=$secondary_private_ips -var security_groups=$security_groups -var source_dest_check=$source_dest_check -var subnet_id=$subnet_id -var use_num_suffix=$use_num_suffix -var name=$name -var tags=$tags -var tenancy=$tenancy -var user_data=$user_data -var user_data_base64=$user_data_base64 -var user_data_replace_on_change=$user_data_replace_on_change -var volume_tags=$volume_tags -var volume_attachment_count=$volume_attachment_count -var aws_volume_attachment_device=$aws_volume_attachment_device -var volume_force_detach=$volume_force_detach -var skip_destroy=$skip_destroy -var stop_instance_before_detaching=$stop_instance_before_detaching -var ebs_encrypted=$ebs_encrypted -var final_snapshot=$final_snapshot -var ebs_iops=$ebs_iops -var multi_attach_enabled=$multi_attach_enabled -var ebs_size=$ebs_size -var snapshot_id=$snapshot_id -var outpost_arn=$outpost_arn -var ebs_type=$ebs_type -var kms_key_id=$kms_key_id -var ebs_tags=$ebs_tags -var throughput=$throughput -var createdBy=$createdBy -var project=$project -var projectComponent=$projectComponent -var env=$env --auto-approve
+terraform destroy -var region=$region -var ami_id=$ami_id -var security_group_name=$security_group_name -var sg_description=$sg_description -var vpc_id=$vpc_id -var ingress_cidr_blocks=$ingress_cidr_blocks -var ingress_rules=$ingress_rules -var egress_rules=$egress_rules -var associate_public_ip_address=$associate_public_ip_address -var availability_zone=$availability_zone -var capacity_reservation_specification=$capacity_reservation_specification -var cpu_options=$cpu_options -var credit_specification=$credit_specification -var disable_api_stop=$disable_api_stop -var disable_api_termination=$disable_api_termination -var ebs_block_device=$ebs_block_device -var ebs_optimized=$ebs_optimized -var enclave_options=$enclave_options -var ephemeral_block_device=$ephemeral_block_device -var get_password_data=$get_password_data -var hibernation=$hibernation -var host_id=$host_id -var host_resource_group_arn=$host_resource_group_arn -var iam_instance_profile=$iam_instance_profile -var instance_initiated_shutdown_behavior=$instance_initiated_shutdown_behavior -var instance_type=$instance_type -var ipv6_address_count=$ipv6_address_count -var ipv6_addresses=$ipv6_addresses -var key_name=$key_name -var launch_template=$launch_template -var maintenance_options=$maintenance_options -var metadata_options=$metadata_options -var monitoring=$monitoring -var network_interface=$network_interface -var placement_group=$placement_group -var placement_partition_number=$placement_partition_number -var private_dns_name_options=$private_dns_name_options -var private_ips=$private_ips -var private_ip=$private_ip -var root_block_device=$root_block_device -var secondary_private_ips=$secondary_private_ips -var security_groups=$security_groups -var source_dest_check=$source_dest_check -var subnet_id=$subnet_id -var use_num_suffix=$use_num_suffix -var name=$name -var tags=$tags -var tenancy=$tenancy -var user_data=$user_data -var user_data_base64=$user_data_base64 -var user_data_replace_on_change=$user_data_replace_on_change -var volume_tags=$volume_tags -var aws_volume_attachment_device=$aws_volume_attachment_device -var volume_force_detach=$volume_force_detach -var skip_destroy=$skip_destroy -var stop_instance_before_detaching=$stop_instance_before_detaching -var ebs_encrypted=$ebs_encrypted -var final_snapshot=$final_snapshot -var ebs_iops=$ebs_iops -var multi_attach_enabled=$multi_attach_enabled -var ebs_size=$ebs_size -var snapshot_id=$snapshot_id -var outpost_arn=$outpost_arn -var ebs_type=$ebs_type -var kms_key_id=$kms_key_id -var ebs_tags=$ebs_tags -var throughput=$throughput -var createdBy=$createdBy -var project=$project -var projectComponent=$projectComponent -var env=$env --auto-approve
 echo "All the resources are destroyed..."

@@ -18,7 +18,7 @@ terraform {
 }
 
 locals {
-  instance_count              = (var.instance_count == "null" || var.instance_count == null) ? 0 : var.instance_count
+  # instance_count              = (var.instance_count == "null" || var.instance_count == null) ? 0 : var.instance_count
   associate_public_ip_address = (var.associate_public_ip_address == "null" || var.associate_public_ip_address == null) ? null : var.associate_public_ip_address
   availability_zone           = var.availability_zone == "null" ? null : var.availability_zone
   is_t_instance_type                   = replace(var.instance_type, "/^t(2|3|3a){1}\\..*$/", "1") == "1" ? true : false
@@ -44,7 +44,7 @@ locals {
   user_data                            = var.user_data == "null" ? null : var.user_data
   user_data_base64                     = var.user_data_base64 == "null" ? null : var.user_data_base64
   user_data_replace_on_change          = (var.user_data_replace_on_change == "null" || var.user_data_replace_on_change == null) ? null : var.user_data_replace_on_change
-  volume_attachment_count              = (var.volume_attachment_count == "null" || var.volume_attachment_count == null) ? 0 : var.volume_attachment_count
+  # volume_attachment_count              = (var.volume_attachment_count == "null" || var.volume_attachment_count == null) ? 0 : var.volume_attachment_count
   aws_volume_attachment_device         = var.aws_volume_attachment_device == "null" ? null : var.aws_volume_attachment_device
   volume_force_detach                  = (var.volume_force_detach == "null" || var.volume_force_detach == null) ? null : var.volume_force_detach
   skip_destroy                         = (var.skip_destroy == "null" || var.skip_destroy == null) ? null : var.skip_destroy
@@ -72,7 +72,7 @@ module "security_group" {
 }
 
 resource "aws_instance" "instance" {
-  count                       = local.instance_count
+  # count                       = local.instance_count
   ami                         = var.ami_id
   associate_public_ip_address = local.associate_public_ip_address
   availability_zone           = local.availability_zone
@@ -203,38 +203,43 @@ resource "aws_instance" "instance" {
   security_groups       = var.security_groups
   source_dest_check     = length(var.network_interface) > 0 ? null : local.source_dest_check
   subnet_id             = local.subnet_id
-  tags = merge(
-    {
-      "Name" = local.instance_count > 1 || var.use_num_suffix ? format("%s-%d", "${var.env}_${var.name}", count.index + 1) : "${var.env}_${var.name}"
-    },
-    var.tags,
-  )
+  # tags = merge(
+  #   {
+  #     "Name" = local.instance_count > 1 || var.use_num_suffix ? format("%s-%d", "${var.env}_${var.name}", count.index + 1) : "${var.env}_${var.name}"
+  #   },
+  #   var.tags,
+  # )
+  tags = var.tags
   tenancy                     = local.tenancy
   user_data                   = local.user_data
   user_data_base64            = local.user_data_base64
   user_data_replace_on_change = local.user_data_replace_on_change
-  volume_tags = merge(
-    {
-      "Name" = local.instance_count > 1 || var.use_num_suffix ? format("%s-%d", "${var.env}_${var.name}", count.index + 1) : "${var.env}_${var.name}"
-    },
-    var.volume_tags,
-  )
+  # volume_tags = merge(
+  #   {
+  #     "Name" = local.instance_count > 1 || var.use_num_suffix ? format("%s-%d", "${var.env}_${var.name}", count.index + 1) : "${var.env}_${var.name}"
+  #   },
+  #   var.volume_tags,
+  # )
+  volume_tags = var.volume_tags
   vpc_security_group_ids = [module.security_group.security_group_id]
 }
 
 resource "aws_volume_attachment" "this_ec2" {
-  count                          = local.volume_attachment_count
+  # count                          = local.volume_attachment_count
   device_name                    = local.aws_volume_attachment_device
-  instance_id                    = aws_instance.instance[count.index].id
-  volume_id                      = aws_ebs_volume.this[count.index].id
+  # instance_id                    = aws_instance.instance[count.index].id
+  # volume_id                      = aws_ebs_volume.this[count.index].id
+  instance_id                    = aws_instance.instance.id
+  volume_id                      = aws_ebs_volume.this.id
   force_detach                   = local.volume_force_detach
   skip_destroy                   = local.skip_destroy
   stop_instance_before_detaching = local.stop_instance_before_detaching
 }
 
 resource "aws_ebs_volume" "this" {
-  count                = local.volume_attachment_count
-  availability_zone    = aws_instance.instance[count.index].availability_zone
+  # count                = local.volume_attachment_count
+  # availability_zone    = aws_instance.instance[count.index].availability_zone
+  availability_zone = local.availability_zone
   encrypted            = local.ebs_encrypted
   final_snapshot       = local.final_snapshot
   iops                 = local.ebs_iops
