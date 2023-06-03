@@ -72,7 +72,7 @@ variable "egress_rules" {
 
 variable "instance_count" {
   description = "Number of EC2 instances to launch"
-  type        = number
+  type        = string
   default     = 1
 }
 
@@ -240,7 +240,7 @@ variable "placement_group" {
 
 variable "placement_partition_number" {
   description = "Number of the partition the instance is in, valid only if the aws_placement_group resource's strategy argument is set to 'partition'"
-  type        = number
+  type        = string
   default     = null
 }
 
@@ -342,7 +342,7 @@ variable "volume_tags" {
 
 variable "volume_attachment_count" {
   description = "Used in count for indexing and obtaining argument values in aws_volume_attachment and aws_ebs_volume resources"
-  type        = number
+  type        = string
   default     = 1
 }
 
@@ -396,7 +396,7 @@ variable "multi_attach_enabled" {
 
 variable "ebs_size" {
   description = "The size of the drive in GiBs"
-  type        = number
+  type        = string
   default     = 2
 }
 
