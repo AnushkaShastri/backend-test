@@ -53,7 +53,7 @@
         "user_data_base64":null, 
         "user_data_replace_on_change":null, 
         "volume_tags":{}, 
-        "volume_attachment_count":1, 
+        "volume_attachment_count":2, 
         "aws_volume_attachment_device":"xvdh", 
         "volume_force_detach":false, 
         "skip_destroy":false, 
