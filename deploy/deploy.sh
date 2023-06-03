@@ -46,7 +46,7 @@ done < <(jq 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< ${!envObj} | 
 [[ -z "$ami_id" ]] && ami_id="ami-0715c1897453cabd1" 
 [[ -z "$security_group_name" ]] && security_group_name="kloudjet_security_group_ec2" 
 [[ -z "$sg_description" ]] && sg_description="Security_group_for_usage_with_EC2_instance" 
-[[ -z "$vpc_id" ]] && echo "VPC ID is Required" && exit 1
+[[ -z "$vpc_id" ]] && echo "VPC Id is required" && exit 1
 [[ -z "$ingress_cidr_blocks" ]] && ingress_cidr_blocks="[\"0.0.0.0/0\"]" 
 [[ -z "$ingress_rules" ]] && ingress_rules="[\"http-80-tc\",\"all-icm\",\"ssh-tcp\"]" 
 [[ -z "$egress_rules" ]] && egress_rules="[\"all-all\"]" 
