@@ -26,7 +26,7 @@
         "image_repository_type": "ECR",
         "auto_scaling_configuration_arn": null,
         "apprunner_encryption_configuration": {},
-        "health_check_configuration": {"healthy_threshold":1,"health_interval":5,"health_path":"/","health_protocol":"TCP","health_timeout":2,"unhealthy_threshold":5},
+        "health_check_configuration": {},
         "instance_configuration": {},
         "network_configuration": {},
         "observability_configuration": {},
