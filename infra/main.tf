@@ -240,7 +240,7 @@ resource "aws_volume_attachment" "this_ec2" {
 resource "aws_ebs_volume" "this" {
   # count                = local.volume_attachment_count
   # availability_zone    = aws_instance.instance[count.index].availability_zone
-  availability_zone = local.availability_zone
+  availability_zone = aws_instance.instance.availability_zone
   encrypted            = local.ebs_encrypted
   final_snapshot       = local.final_snapshot
   iops                 = local.ebs_iops
