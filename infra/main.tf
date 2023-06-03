@@ -9,13 +9,13 @@ provider "aws" {
   }
 }
 
-# terraform {
-#   backend "http" {
-#     update_method = "POST"
-#     lock_method   = "POST"
-#     unlock_method = "POST"
-#   }
-# }
+terraform {
+  backend "http" {
+    update_method = "POST"
+    lock_method   = "POST"
+    unlock_method = "POST"
+  }
+}
 
 locals {
   iam_policy_name          = (var.iam_policy_name == "null" || var.iam_policy_name == null) ? null : "${var.env}-${var.iam_policy_name}"
