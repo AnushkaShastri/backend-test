@@ -1,17 +1,35 @@
 {
-  "dev":{
-      "repoName":"kloudjet-python-app-repo",
-      "region":"us-east-1",
-      "imageTag":"latest",
-      "policy_name":"python-apprunner-iam-policy",
-      "iam_role_name":"python-apprunner-iam-role",
-      "image_tag_mutability":"IMMUTABLE",
-      "service_name":"python-apprunner-ping",
-      "port":"8000",
-      "image_repository_type":"ECR",
-      "auto_deployments_enabled":false,
-      "tags":{
-          "Name" : "Backend-apprunner-service" 
-      }
-  }
+    "dev": {
+        "region": "us-east-1",
+        "iam_policy_name": "kloudjet-node-app-iam-policy",
+        "iam_policy_prefix": null,
+        "iam_role_description": null,
+        "force_detach_policies": true,
+        "max_session_duration": 3600,
+        "iam_path": "/",
+        "iam_role_name": "kloudjet-node-app-iam-role",
+        "iam_role_prefix": null,
+        "iam_role_tags": {},
+        "reponame": "kloudjet-node-app-repo",
+        "encryption_configuration": [],
+        "ecr_force_delete": true,
+        "image_tag_mutability": "IMMUTABLE",
+        "image_scanning_configuration": {},
+        "ecr_tags": {},
+        "apprunner_service_name": "kloudjet-node-app-ping",
+        "auto_deployments_enabled": true,
+        "image_port": "8080",
+        "image_runtime_environment_secrets": {},
+        "image_runtime_environment_variables": {},
+        "image_start_command": null,
+        "image_tag": "latest",
+        "image_repository_type": "ECR",
+        "auto_scaling_configuration_arn": null,
+        "apprunner_encryption_configuration": {},
+        "health_check_configuration": {},
+        "instance_configuration": {},
+        "network_configuration": {},
+        "observability_configuration": {},
+        "apprunner_tags": {}
+    }
 }
