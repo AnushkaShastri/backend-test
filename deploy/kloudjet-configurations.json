@@ -14,7 +14,7 @@
         "capacity_reservation_specification":{}, 
         "cpu_options":{}, 
         "credit_specification":{}, 
-        "disable_api_stop":"", 
+        "disable_api_stop":null, 
         "disable_api_termination":null, 
         "ebs_block_device":[], 
         "ebs_optimized":false, 
