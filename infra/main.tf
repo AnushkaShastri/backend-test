@@ -19,41 +19,41 @@ terraform {
 
 locals {
   instance_count              = (var.instance_count == "null" || var.instance_count == null) ? 0 : var.instance_count
-  associate_public_ip_address = var.associate_public_ip_address == "null" ? null : var.associate_public_ip_address
+  associate_public_ip_address = (var.associate_public_ip_address == "null" || var.associate_public_ip_address == null) ? null : var.associate_public_ip_address
   availability_zone           = var.availability_zone == "null" ? null : var.availability_zone
   is_t_instance_type                   = replace(var.instance_type, "/^t(2|3|3a){1}\\..*$/", "1") == "1" ? true : false
-  disable_api_stop                     = var.disable_api_stop == "null" ? null : var.disable_api_stop
-  disable_api_termination              = var.disable_api_termination == "null" ? null : var.disable_api_termination
-  ebs_optimized                        = var.ebs_optimized == "null" ? null : var.ebs_optimized
-  get_password_data                    = var.get_password_data == "null" ? null : var.get_password_data
-  hibernation                          = var.hibernation == "null" ? null : var.hibernation
+  disable_api_stop                     = (var.disable_api_stop == "null" || var.disable_api_stop == null) ? null : var.disable_api_stop
+  disable_api_termination              = (var.disable_api_termination == "null" || var.disable_api_termination == null) ? null : var.disable_api_termination
+  ebs_optimized                        = (var.ebs_optimized == "null" || var.ebs_optimized == null) ? null : var.ebs_optimized
+  get_password_data                    = (var.get_password_data == "null" || var.get_password_data == null) ? null : var.get_password_data
+  hibernation                          = (var.hibernation == "null" || var.hibernation == null) ? null : var.hibernation
   host_id                              = var.host_id == "null" ? null : var.host_id
   host_resource_group_arn              = var.host_resource_group_arn == "null" ? null : var.host_resource_group_arn
   iam_instance_profile                 = var.iam_instance_profile == "null" ? null : var.iam_instance_profile
   instance_initiated_shutdown_behavior = var.instance_initiated_shutdown_behavior == "null" ? null : var.instance_initiated_shutdown_behavior
   instance_type                        = var.instance_type == "null" ? null : var.instance_type
-  ipv6_address_count                   = var.ipv6_address_count == "null" ? null : var.ipv6_address_count
+  ipv6_address_count                   = (var.ipv6_address_count == "null" || var.ipv6_address_count == null) ? null : var.ipv6_address_count
   key_name                             = var.key_name == "null" ? null : var.key_name
-  monitoring                           = var.monitoring == "null" ? null : var.monitoring
+  monitoring                           = (var.monitoring == "null" || var.monitoring == null) ? null : var.monitoring
   placement_group                      = var.placement_group == "null" ? null : var.placement_group
-  placement_partition_number           = var.placement_partition_number == "null" ? null : var.placement_partition_number
+  placement_partition_number           = (var.placement_partition_number == "null" || var.placement_partition_number == null) ? null : var.placement_partition_number
   private_ip                           = var.private_ip == "null" ? null : var.private_ip
-  source_dest_check                    = var.source_dest_check == "null" ? null : var.source_dest_check
+  source_dest_check                    = (var.source_dest_check == "null" || var.source_dest_check == null) ? null : var.source_dest_check
   subnet_id                            = var.subnet_id == "null" ? null : var.subnet_id
   tenancy                              = var.tenancy == "null" ? null : var.tenancy
   user_data                            = var.user_data == "null" ? null : var.user_data
   user_data_base64                     = var.user_data_base64 == "null" ? null : var.user_data_base64
-  user_data_replace_on_change          = var.user_data_replace_on_change == "null" ? null : var.user_data_replace_on_change
+  user_data_replace_on_change          = (var.user_data_replace_on_change == "null" || var.user_data_replace_on_change == null) ? null : var.user_data_replace_on_change
   volume_attachment_count              = (var.volume_attachment_count == "null" || var.volume_attachment_count == null) ? 0 : var.volume_attachment_count
   aws_volume_attachment_device         = var.aws_volume_attachment_device == "null" ? null : var.aws_volume_attachment_device
-  volume_force_detach                  = var.volume_force_detach == "null" ? null : var.volume_force_detach
-  skip_destroy                         = var.skip_destroy == "null" ? null : var.skip_destroy
-  stop_instance_before_detaching       = var.stop_instance_before_detaching == "null" ? null : var.stop_instance_before_detaching
-  ebs_encrypted                        = var.ebs_encrypted == "null" ? null : var.ebs_encrypted
-  final_snapshot                       = var.final_snapshot == "null" ? null : var.final_snapshot
-  multi_attach_enabled                 = var.multi_attach_enabled == "null" ? null : var.multi_attach_enabled
+  volume_force_detach                  = (var.volume_force_detach == "null" || var.volume_force_detach == null) ? null : var.volume_force_detach
+  skip_destroy                         = (var.skip_destroy == "null" || var.skip_destroy == null) ? null : var.skip_destroy
+  stop_instance_before_detaching       = (var.stop_instance_before_detaching == "null" || var.stop_instance_before_detaching == null) ? null : var.stop_instance_before_detaching
+  ebs_encrypted                        = (var.ebs_encrypted == "null" || var.ebs_encrypted == null) ? null : var.ebs_encrypted
+  final_snapshot                       = (var.final_snapshot == "null" || var.final_snapshot == null) ? null : var.final_snapshot
+  multi_attach_enabled                 = (var.multi_attach_enabled == "null" || var.multi_attach_enabled == null) ? null : var.multi_attach_enabled
   ebs_iops                             = var.ebs_iops == "null" ? null : var.ebs_iops
-  ebs_size                             = var.ebs_size == "null" ? null : var.ebs_size
+  ebs_size                             = (var.ebs_size == "null" || var.ebs_size == null) ? null : var.ebs_size
   snapshot_id                          = var.snapshot_id == "null" ? null : var.snapshot_id
   outpost_arn                          = var.outpost_arn == "null" ? null : var.outpost_arn
   ebs_type                             = var.ebs_type == "null" ? null : var.ebs_type
