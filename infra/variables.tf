@@ -78,7 +78,7 @@ variable "instance_count" {
 
 variable "associate_public_ip_address" {
   description = "If true, the EC2 instance will have associated public IP address"
-  type        = bool
+  type        = string
   default     = true
 }
 
@@ -108,13 +108,13 @@ variable "credit_specification" {
 
 variable "disable_api_stop" {
   description = "If true, enables EC2 Instance Stop Protection"
-  type        = bool
+  type        = string
   default     = null
 }
 
 variable "disable_api_termination" {
   description = "If true, enables EC2 Instance Termination Protection"
-  type        = bool
+  type        = string
   default     = null
 }
 
@@ -126,7 +126,7 @@ variable "ebs_block_device" {
 
 variable "ebs_optimized" {
   description = "If true, the launched EC2 instance will be EBS-optimized, if the instance type is optimized by default then there is no need to set this and there is no effect to disabling it"
-  type        = bool
+  type        = string
   default     = false
 }
 
@@ -144,13 +144,13 @@ variable "ephemeral_block_device" {
 
 variable "get_password_data" {
   description = "If true, wait for password data to become available and retrieve it."
-  type        = bool
+  type        = string
   default     = false
 }
 
 variable "hibernation" {
   description = "If true, the launched EC2 instance will support hibernation"
-  type        = bool
+  type        = string
   default     = null
 }
 
@@ -222,7 +222,7 @@ variable "metadata_options" {
 
 variable "monitoring" {
   description = "If true, the launched EC2 instance will have detailed monitoring enabled"
-  type        = bool
+  type        = string
   default     = false
 }
 
@@ -282,7 +282,7 @@ variable "security_groups" {
 
 variable "source_dest_check" {
   description = "Controls if traffic is routed to the instance when the destination address does not match the instance. Used for NAT or VPNs."
-  type        = bool
+  type        = string
   default     = true
 }
 
@@ -294,7 +294,7 @@ variable "subnet_id" {
 
 variable "use_num_suffix" {
   description = "Always append numerical suffix to instance name, even if instance_count is 1"
-  type        = bool
+  type        = string
   default     = false
 }
 
@@ -330,7 +330,7 @@ variable "user_data_base64" {
 
 variable "user_data_replace_on_change" {
   description = "When used in combination with user_data or user_data_base64 will trigger a destroy and recreate when set to true, defaults to false"
-  type        = bool
+  type        = string
   default     = null
 }
 
@@ -354,31 +354,31 @@ variable "aws_volume_attachment_device" {
 
 variable "volume_force_detach" {
   description = "Set to true if you want to force the volume to detach"
-  type        = bool
+  type        = string
   default     = false
 }
 
 variable "skip_destroy" {
   description = "Set this to true if you do not wish to detach the volume from the instance to which it is attached at destroy time, and instead just remove the attachment from Terraform state"
-  type        = bool
+  type        = string
   default     = false
 }
 
 variable "stop_instance_before_detaching" {
   description = "Set this to true to ensure that the target instance is stopped before trying to detach the volume"
-  type        = bool
+  type        = string
   default     = false
 }
 
 variable "ebs_encrypted" {
   description = "If true, the disk will be encrypted"
-  type        = bool
+  type        = string
   default     = false
 }
 
 variable "final_snapshot" {
   description = "If true, snapshot will be created before volume deletion, any tags on the volume will be migrated to the snapshot"
-  type        = bool
+  type        = string
   default     = false
 }
 
@@ -390,7 +390,7 @@ variable "ebs_iops" {
 
 variable "multi_attach_enabled" {
   description = "Specifies whether to enable Amazon EBS Multi-Attach"
-  type        = bool
+  type        = string
   default     = false
 }
 
