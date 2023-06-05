@@ -6,6 +6,7 @@ done
 
 [[ -z "$access_key" ]] && echo "AWS Access Key is Required" && exit 1
 [[ -z "$secret_key" ]] && echo "AWS Secret Key is Required" && exit 1
+[[ -z "$accid" ]] && echo "AWS Account ID is Required" && exit 1
 
 [[ -z "$env" ]] && echo "Environment is Required" && exit 1
 [[ -z "$file" ]] && echo "JSON Configurations file is Required" && exit 1
@@ -42,159 +43,204 @@ while IFS== read key value; do
  printf -v "$key" "%s" "$value"
 done < <(jq 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< ${!envObj} | sed -e 's/^"//' -e 's/"$//')
 
-[[ -z "$region" ]] && region="us-east-1" 
-[[ -z "$ami_id" ]] && ami_id="ami-0715c1897453cabd1" 
-[[ -z "$security_group_name" ]] && security_group_name="kloudjet_security_group_ec2" 
-[[ -z "$sg_description" ]] && sg_description="Security_group_for_usage_with_EC2_instance" 
-[[ -z "$vpc_id" ]] && echo "VPC ID is Required" && exit 1
-[[ -z "$ingress_cidr_blocks" ]] && ingress_cidr_blocks="[\"0.0.0.0/0\"]" 
-[[ -z "$ingress_rules" ]] && ingress_rules="[\"http-80-tc\",\"all-icm\",\"ssh-tcp\"]" 
-[[ -z "$egress_rules" ]] && egress_rules="[\"all-all\"]" 
-# [[ -z "$instance_count" ]] && instance_count="1" 
-[[ -z "$associate_public_ip_address" ]] && associate_public_ip_address="true" 
-[[ -z "$availability_zone" ]] && availability_zone="null" 
-[[ -z "$capacity_reservation_specification" ]] && capacity_reservation_specification={} 
-[[ -z "$cpu_options" ]] && cpu_options={} 
-[[ -z "$credit_specification" ]] && credit_specification={} 
-[[ -z "$disable_api_stop" ]] && disable_api_stop="null" 
-[[ -z "$disable_api_termination" ]] && disable_api_termination="null" 
-[[ -z "$ebs_block_device" ]] && ebs_block_device=[] 
-[[ -z "$ebs_optimized" ]] && ebs_optimized="false" 
-[[ -z "$enclave_options" ]] && enclave_options="{}" 
-[[ -z "$ephemeral_block_device" ]] && ephemeral_block_device="[]" 
-[[ -z "$get_password_data" ]] && get_password_data="false" 
-[[ -z "$hibernation" ]] && hibernation="null" 
-[[ -z "$host_id" ]] && host_id="null" 
-[[ -z "$host_resource_group_arn" ]] && host_resource_group_arn="null" 
-[[ -z "$iam_instance_profile" ]] && iam_instance_profile="EC2_Can_Use_Services" 
-[[ -z "$instance_initiated_shutdown_behavior" ]] && instance_initiated_shutdown_behavior="null" 
-[[ -z "$instance_type" ]] && instance_type="t2.micro" 
-[[ -z "$ipv6_address_count" ]] && ipv6_address_count="null" 
-[[ -z "$ipv6_addresses" ]] && ipv6_addresses=[] 
-[[ -z "$key_name" ]] && key_name="null" 
-[[ -z "$launch_template" ]] && launch_template={} 
-[[ -z "$maintenance_options" ]] && maintenance_options={} 
-[[ -z "$metadata_options" ]] && metadata_options={} 
-[[ -z "$monitoring" ]] && monitoring="false" 
-[[ -z "$network_interface" ]] && network_interface=[] 
-[[ -z "$placement_group" ]] && placement_group="null" 
-[[ -z "$placement_partition_number" ]] && placement_partition_number="null" 
-[[ -z "$private_dns_name_options" ]] && private_dns_name_options={} 
-[[ -z "$private_ips" ]] && private_ips=[] 
-[[ -z "$private_ip" ]] && private_ip="null" 
-[[ -z "$root_block_device" ]] && root_block_device=[] 
-[[ -z "$secondary_private_ips" ]] && secondary_private_ips=[] 
-[[ -z "$security_groups" ]] && security_groups=[] 
-[[ -z "$source_dest_check" ]] && source_dest_check="true" 
-[[ -z "$subnet_id" ]] && subnet_id="null" 
-[[ -z "$use_num_suffix" ]] && use_num_suffix="false" 
-[[ -z "$name" ]] && name="kloudjet_ec2" 
-[[ -z "$tags" ]] && tags={} 
-[[ -z "$tenancy" ]] && tenancy="default" 
-[[ -z "$user_data" ]] && user_data="null" 
-[[ -z "$user_data_base64" ]] && user_data_base64="null" 
-[[ -z "$user_data_replace_on_change" ]] && user_data_replace_on_change="null" 
-[[ -z "$volume_tags" ]] && volume_tags={} 
-# [[ -z "$volume_attachment_count" ]] && volume_attachment_count="1" 
-[[ -z "$aws_volume_attachment_device" ]] && aws_volume_attachment_device="xvdh" 
-[[ -z "$volume_force_detach" ]] && volume_force_detach="false" 
-[[ -z "$skip_destroy" ]] && skip_destroy="false" 
-[[ -z "$stop_instance_before_detaching" ]] && stop_instance_before_detaching="false" 
-[[ -z "$ebs_encrypted" ]] && ebs_encrypted="false" 
-[[ -z "$final_snapshot" ]] && final_snapshot="false" 
-[[ -z "$ebs_iops" ]] && ebs_iops="null" 
-[[ -z "$multi_attach_enabled" ]] && multi_attach_enabled="false" 
-[[ -z "$ebs_size" ]] && ebs_size="2" 
-[[ -z "$snapshot_id" ]] && snapshot_id="null" 
-[[ -z "$outpost_arn" ]] && outpost_arn="null" 
-[[ -z "$ebs_type" ]] && ebs_type="null" 
-[[ -z "$kms_key_id" ]] && kms_key_id="null" 
-[[ -z "$ebs_tags" ]] && ebs_tags={} 
-[[ -z "$throughput" ]] && throughput="null"
-
-echo "Following variable values will be used..."
+[[ -z "$region" ]] && region="us-west-1"
+[[ -z "$vpc_id" ]] && echo "VPC Id is required" && exit 1
+[[ -z "$reponame" ]] && reponame="kj-nodejs-eks-repo"
+[[ -z "$encryption_configuration" ]] && encryption_configuration={}
+[[ -z "$force_delete" ]] && force_delete=true
+[[ -z "$image_tag_mutability" ]] && image_tag_mutability="IMMUTABLE"
+[[ -z "$image_scanning_configuration" ]] && image_scanning_configuration={}
+[[ -z "$iam_role_description" ]] && iam_role_description=null
+[[ -z "$force_detach_policies" ]] && force_detach_policies=true
+[[ -z "$max_session_duration" ]] && max_session_duration=3600
+[[ -z "$iam_path" ]] && iam_path="/"
+[[ -z "$iam_role_name" ]] && iam_role_name="kloudjet-node-app-iam-role"
+[[ -z "$iam_role_prefix" ]] && iam_role_prefix=null
+[[ -z "$iam_role_tags" ]] && iam_role_tags={}
+[[ -z "$sg_description" ]] && sg_description=null
+[[ -z "$sg_egress" ]] && sg_egress="[{\"sg_egress_from_port\":0,\"sg_egress_to_port\":0,\"sg_egress_protocol\":\"-1\",\"sg_egress_cidr_blocks\":[\"0.0.0.0/0\"]}]"
+[[ -z "$sg_ingress" ]] && sg_ingress=[]
+[[ -z "$sg_name" ]] && sg_name=null
+[[ -z "$sg_name_prefix" ]] && sg_name_prefix=null
+[[ -z "$revoke_rules_on_delete" ]] && revoke_rules_on_delete=false
+[[ -z "$sg_tags" ]] && sg_tags={}
+[[ -z "$sg_from_port" ]] && sg_from_port=443
+[[ -z "$sg_protocol" ]] && sg_protocol=tcp
+[[ -z "$sg_to_port" ]] && sg_to_port=443
+[[ -z "$sgr_description" ]] && sgr_description=null
+[[ -z "$ipv6_cidr_blocks" ]] && ipv6_cidr_blocks=[]
+[[ -z "$sgr_prefix_list_ids" ]] && sgr_prefix_list_ids=[]
+[[ -z "$cluster_name" ]] && cluster_name=K8_Cluster
+[[ -z "$endpoint_private_access" ]] && endpoint_private_access=false
+[[ -z "$endpoint_public_access" ]] && endpoint_public_access=true
+[[ -z "$public_access_cidrs" ]] && public_access_cidrs="[\"0.0.0.0/0\"]"
+[[ -z "$enabled_cluster_log_types" ]] && enabled_cluster_log_types=[]
+[[ -z "$eks_cluster_encryption_config" ]] && eks_cluster_encryption_config={}
+[[ -z "$kubernetes_network_config" ]] && kubernetes_network_config={}
+[[ -z "$outpost_config" ]] && outpost_config={}
+[[ -z "$cluster_tags" ]] && cluster_tags={}
+[[ -z "$cluster_version" ]] && cluster_version=null
+[[ -z "$oidc_tags" ]] && oidc_tags={}
+[[ -z "$desired_capacity" ]] && desired_capacity=1
+[[ -z "$max_capacity" ]] && max_capacity=2
+[[ -z "$min_capacity" ]] && min_capacity=1
+[[ -z "$eks_ami_type" ]] && eks_ami_type=null
+[[ -z "$capacity_type" ]] && capacity_type=null
+[[ -z "$disk_size" ]] && disk_size=null
+[[ -z "$force_update_version" ]] && force_update_version=null
+[[ -z "$instance_types" ]] && instance_types="[\"t3.medium\"]"
+[[ -z "$labels" ]] && labels={}
+[[ -z "$launch_template" ]] && launch_template={}
+[[ -z "$node_group_name" ]] && node_group_name=k8_cluster
+[[ -z "$node_group_name_prefix" ]] && node_group_name_prefix=null
+[[ -z "$release_version" ]] && release_version=null
+[[ -z "$remote_access" ]] && remote_access=null
+[[ -z "$node_group_tags" ]] && node_group_tags={}
+[[ -z "$taint" ]] && taint=[]
+[[ -z "$node_group_version" ]] && node_group_version=null
+[[ -z "$lbControllerRoleName" ]] && lbControllerRoleName=AmazonEKSLoadBalancerControllerRole
+[[ -z "$loadBalancerControllerPolicy" ]] && loadBalancerControllerPolicy=AWSLoadBalancerControllerIAMPolicy
+[[ -z "$loadBalancerControllerPolicyPath" ]] && loadBalancerControllerPolicyPath="/"
+[[ -z "$aliases" ]] && aliases=[]
+[[ -z "$cloudfront_comments" ]] && cloudfront_comments=null
+[[ -z "$custom_error_response" ]] && custom_error_response=[]
+[[ -z "$allowed_methods" ]] && allowed_methods="[\"DELETE\",\"GET\",\"HEAD\",\"OPTIONS\",\"PATCH\",\"POST\",\"PUT\"]"
+[[ -z "$cached_methods" ]] && cached_methods="[\"GET\",\"HEAD\",\"OPTIONS\"]"
+[[ -z "$compress" ]] && compress=false
+[[ -z "$default_ttl" ]] && default_ttl=null
+[[ -z "$field_level_encryption_id" ]] && field_level_encryption_id=null
+[[ -z "$forwarded_values" ]] && forwarded_values="{\"forward\":\"none\",\"query_string\":false}"
+[[ -z "$lambda_function_association" ]] && lambda_function_association=[]
+[[ -z "$function_association" ]] && function_association=[]
+[[ -z "$max_ttl" ]] && max_ttl=null
+[[ -z "$min_ttl" ]] && min_ttl=null
+[[ -z "$origin_request_policy_id" ]] && origin_request_policy_id=null
+[[ -z "$realtime_log_config_arn" ]] && realtime_log_config_arn=null
+[[ -z "$response_headers_policy_id" ]] && response_headers_policy_id=null
+[[ -z "$smooth_streaming" ]] && smooth_streaming=false
+[[ -z "$trusted_key_groups" ]] && trusted_key_groups=[]
+[[ -z "$trusted_signers" ]] && trusted_signers=[]
+[[ -z "$viewer_protocol_policy" ]] && viewer_protocol_policy=allow
+[[ -z "$default_root_object" ]] && default_root_object=null
+[[ -z "$enabled" ]] && enabled=true
+[[ -z "$is_ipv6_enabled" ]] && is_ipv6_enabled=false
+[[ -z "$http_version" ]] && http_version=null
+[[ -z "$logging_config" ]] && logging_config={}
+[[ -z "$connection_attempts" ]] && connection_attempts=null
+[[ -z "$connection_timeout" ]] && connection_timeout=null
+[[ -z "$custom_origin_config" ]] && custom_origin_config="{\"http_port\":\"80\",\"https_port\":\"443\",\"origin_protocol_policy\":\"http-only\",\"origin_ssl_protocols\":[\"TLSv1.2\"]}"
+[[ -z "$custom_header" ]] && custom_header=[]
+[[ -z "$origin_path" ]] && origin_path=null
+[[ -z "$origin_shield" ]] && origin_shield={}
+[[ -z "$price_class" ]] && price_class=null
+[[ -z "$restrictions" ]] && restrictions="{\"restriction_type\":\"none\"}"
+[[ -z "$cloudfront_tags" ]] && cloudfront_tags={}
+[[ -z "$viewer_certificate" ]] && viewer_certificate="{\"cloudfront_default_certificate\":true}"
+[[ -z "$web_acl_id" ]] && web_acl_id=null
+[[ -z "$retain_on_delete" ]] && retain_on_delete=false
+[[ -z "$wait_for_deployment" ]] && wait_for_deployment=false
 
 echo region : $region
-echo ami_id : $ami_id
-echo security_group_name : $security_group_name
-echo sg_description : $sg_description
 echo vpc_id : $vpc_id
-echo ingress_cidr_blocks : $ingress_cidr_blocks
-echo ingress_rules : $ingress_rules
-echo egress_rules : $egress_rules
-# echo instance_count : $instance_count
-echo associate_public_ip_address : $associate_public_ip_address
-echo availability_zone : $availability_zone
-echo capacity_reservation_specification : $capacity_reservation_specification
-echo cpu_options : $cpu_options
-echo credit_specification : $credit_specification
-echo disable_api_stop : $disable_api_stop
-echo disable_api_termination : $disable_api_termination
-echo ebs_block_device : $ebs_block_device
-echo ebs_optimized : $ebs_optimized
-echo enclave_options : $enclave_options
-echo ephemeral_block_device : $ephemeral_block_device
-echo get_password_data : $get_password_data
-echo hibernation : $hibernation
-echo host_id : $host_id
-echo host_resource_group_arn : $host_resource_group_arn
-echo iam_instance_profile : $iam_instance_profile
-echo instance_initiated_shutdown_behavior : $instance_initiated_shutdown_behavior
-echo instance_type : $instance_type
-echo ipv6_address_count : $ipv6_address_count
-echo ipv6_addresses : $ipv6_addresses
-echo key_name : $key_name
+echo reponame : $reponame
+echo encryption_configuration : $encryption_configuration
+echo force_delete : $force_delete
+echo image_tag_mutability : $image_tag_mutability
+echo image_scanning_configuration : $image_scanning_configuration
+echo iam_role_description : $iam_role_description
+echo force_detach_policies : $force_detach_policies
+echo max_session_duration : $max_session_duration
+echo iam_path : $iam_path
+echo iam_role_name : $iam_role_name
+echo iam_role_prefix : $iam_role_prefix
+echo iam_role_tags : $iam_role_tags
+echo sg_description : $sg_description
+echo sg_egress : $sg_egress
+echo sg_ingress : $sg_ingress
+echo sg_name : $sg_name
+echo sg_name_prefix : $sg_name_prefix
+echo revoke_rules_on_delete : $revoke_rules_on_delete
+echo sg_tags : $sg_tags
+echo sg_from_port : $sg_from_port
+echo sg_protocol : $sg_protocol
+echo sg_to_port : $sg_to_port
+echo sgr_description : $sgr_description
+echo ipv6_cidr_blocks : $ipv6_cidr_blocks
+echo sgr_prefix_list_ids : $sgr_prefix_list_ids
+echo cluster_name : $cluster_name
+echo endpoint_private_access : $endpoint_private_access
+echo endpoint_public_access : $endpoint_public_access
+echo public_access_cidrs : $public_access_cidrs
+echo enabled_cluster_log_types : $enabled_cluster_log_types
+echo eks_cluster_encryption_config : $eks_cluster_encryption_config
+echo kubernetes_network_config : $kubernetes_network_config
+echo outpost_config : $outpost_config
+echo cluster_tags : $cluster_tags
+echo cluster_version : $cluster_version
+echo oidc_tags : $oidc_tags
+echo desired_capacity : $desired_capacity
+echo max_capacity : $max_capacity
+echo min_capacity : $min_capacity
+echo eks_ami_type : $eks_ami_type
+echo capacity_type : $capacity_type
+echo disk_size : $disk_size
+echo force_update_version : $force_update_version
+echo instance_types : $instance_types
+echo labels : $labels
 echo launch_template : $launch_template
-echo maintenance_options : $maintenance_options
-echo metadata_options : $metadata_options
-echo monitoring : $monitoring
-echo network_interface : $network_interface
-echo placement_group : $placement_group
-echo placement_partition_number : $placement_partition_number
-echo private_dns_name_options : $private_dns_name_options
-echo private_ips : $private_ips
-echo private_ip : $private_ip
-echo root_block_device : $root_block_device
-echo secondary_private_ips : $secondary_private_ips
-echo security_groups : $security_groups
-echo source_dest_check : $source_dest_check
-echo subnet_id : $subnet_id
-echo use_num_suffix : $use_num_suffix
-echo name : $name
-echo tags : $tags
-echo tenancy : $tenancy
-echo user_data : $user_data
-echo user_data_base64 : $user_data_base64
-echo user_data_replace_on_change : $user_data_replace_on_change
-echo volume_tags : $volume_tags
-# echo volume_attachment_count : $volume_attachment_count
-echo aws_volume_attachment_device : $aws_volume_attachment_device
-echo volume_force_detach : $volume_force_detach
-echo skip_destroy : $skip_destroy
-echo stop_instance_before_detaching : $stop_instance_before_detaching
-echo ebs_encrypted : $ebs_encrypted
-echo final_snapshot : $final_snapshot
-echo ebs_iops : $ebs_iops
-echo multi_attach_enabled : $multi_attach_enabled
-echo ebs_size : $ebs_size
-echo snapshot_id : $snapshot_id
-echo outpost_arn : $outpost_arn
-echo ebs_type : $ebs_type
-echo kms_key_id : $kms_key_id
-echo ebs_tags : $ebs_tags
-echo throughput : $throughput
-echo createdBy : $createdBy
-echo project : $project
-echo projectComponent : $projectComponent
-echo env : $env
+echo node_group_name : $node_group_name
+echo node_group_name_prefix : $node_group_name_prefix
+echo release_version : $release_version
+echo remote_access : $remote_access
+echo node_group_tags : $node_group_tags
+echo taint : $taint
+echo node_group_version : $node_group_version
+echo lbControllerRoleName : $lbControllerRoleName
+echo loadBalancerControllerPolicy : $loadBalancerControllerPolicy
+echo loadBalancerControllerPolicyPath : $loadBalancerControllerPolicyPath
+echo aliases : $aliases
+echo cloudfront_comments : $cloudfront_comments
+echo custom_error_response : $custom_error_response
+echo allowed_methods : $allowed_methods
+echo cached_methods : $cached_methods
+echo compress : $compress
+echo default_ttl : $default_ttl
+echo field_level_encryption_id : $field_level_encryption_id
+echo forwarded_values : $forwarded_values
+echo lambda_function_association : $lambda_function_association
+echo function_association : $function_association
+echo max_ttl : $max_ttl
+echo min_ttl : $min_ttl
+echo origin_request_policy_id : $origin_request_policy_id
+echo realtime_log_config_arn : $realtime_log_config_arn
+echo response_headers_policy_id : $response_headers_policy_id
+echo smooth_streaming : $smooth_streaming
+echo trusted_key_groups : $trusted_key_groups
+echo trusted_signers : $trusted_signers
+echo viewer_protocol_policy : $viewer_protocol_policy
+echo default_root_object : $default_root_object
+echo enabled : $enabled
+echo is_ipv6_enabled : $is_ipv6_enabled
+echo http_version : $http_version
+echo logging_config : $logging_config
+echo connection_attempts : $connection_attempts
+echo connection_timeout : $connection_timeout
+echo custom_origin_config : $custom_origin_config
+echo custom_header : $custom_header
+echo origin_path : $origin_path
+echo origin_shield : $origin_shield
+echo price_class : $price_class
+echo restrictions : $restrictions
+echo cloudfront_tags : $cloudfront_tags
+echo viewer_certificate : $viewer_certificate
+echo web_acl_id : $web_acl_id
+echo retain_on_delete : $retain_on_delete
+echo wait_for_deployment : $wait_for_deployment
 
 echo "Configuring AWS..."
-aws configure set aws_access_key_id $access_key && aws configure set aws_secret_access_key $secret_key && aws configure set default.region $region
-
+aws configure set aws_access_key_id $access_key && aws configure set aws_secret_access_key $secret_key && aws configure set region $region
+aws eks update-kubeconfig --region $region --name "$env"_"$cluster_name"
+address=$(kubectl get ingress nodejs-ingress -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 cd infra
-echo "Initializing..."
-terraform init -reconfigure
-
-echo "Destruction of resources will take few minutes..."
-terraform destroy -var region=$region -var ami_id=$ami_id -var security_group_name=$security_group_name -var sg_description=$sg_description -var vpc_id=$vpc_id -var ingress_cidr_blocks=$ingress_cidr_blocks -var ingress_rules=$ingress_rules -var egress_rules=$egress_rules -var associate_public_ip_address=$associate_public_ip_address -var availability_zone=$availability_zone -var capacity_reservation_specification=$capacity_reservation_specification -var cpu_options=$cpu_options -var credit_specification=$credit_specification -var disable_api_stop=$disable_api_stop -var disable_api_termination=$disable_api_termination -var ebs_block_device=$ebs_block_device -var ebs_optimized=$ebs_optimized -var enclave_options=$enclave_options -var ephemeral_block_device=$ephemeral_block_device -var get_password_data=$get_password_data -var hibernation=$hibernation -var host_id=$host_id -var host_resource_group_arn=$host_resource_group_arn -var iam_instance_profile=$iam_instance_profile -var instance_initiated_shutdown_behavior=$instance_initiated_shutdown_behavior -var instance_type=$instance_type -var ipv6_address_count=$ipv6_address_count -var ipv6_addresses=$ipv6_addresses -var key_name=$key_name -var launch_template=$launch_template -var maintenance_options=$maintenance_options -var metadata_options=$metadata_options -var monitoring=$monitoring -var network_interface=$network_interface -var placement_group=$placement_group -var placement_partition_number=$placement_partition_number -var private_dns_name_options=$private_dns_name_options -var private_ips=$private_ips -var private_ip=$private_ip -var root_block_device=$root_block_device -var secondary_private_ips=$secondary_private_ips -var security_groups=$security_groups -var source_dest_check=$source_dest_check -var subnet_id=$subnet_id -var use_num_suffix=$use_num_suffix -var name=$name -var tags=$tags -var tenancy=$tenancy -var user_data=$user_data -var user_data_base64=$user_data_base64 -var user_data_replace_on_change=$user_data_replace_on_change -var volume_tags=$volume_tags -var aws_volume_attachment_device=$aws_volume_attachment_device -var volume_force_detach=$volume_force_detach -var skip_destroy=$skip_destroy -var stop_instance_before_detaching=$stop_instance_before_detaching -var ebs_encrypted=$ebs_encrypted -var final_snapshot=$final_snapshot -var ebs_iops=$ebs_iops -var multi_attach_enabled=$multi_attach_enabled -var ebs_size=$ebs_size -var snapshot_id=$snapshot_id -var outpost_arn=$outpost_arn -var ebs_type=$ebs_type -var kms_key_id=$kms_key_id -var ebs_tags=$ebs_tags -var throughput=$throughput -var createdBy=$createdBy -var project=$project -var projectComponent=$projectComponent -var env=$env --auto-approve
-echo "All the resources are destroyed..."
+terraform init
+terraform destroy -var createdBy=$createdBy -var project=$project -var projectComponent=$projectComponent -var env=$env -var region=$region -var vpc_id=$vpc_id -var reponame=$reponame -var encryption_configuration=$encryption_configuration -var force_delete=$force_delete -var image_tag_mutability=$image_tag_mutability -var image_scanning_configuration=$image_scanning_configuration -var iam_role_description=$iam_role_description -var force_detach_policies=$force_detach_policies -var max_session_duration=$max_session_duration -var iam_path=$iam_path -var iam_role_name=$iam_role_name -var iam_role_prefix=$iam_role_prefix -var iam_role_tags=$iam_role_tags -var sg_description=$sg_description -var sg_egress=$sg_egress -var sg_ingress=$sg_ingress -var sg_name=$sg_name -var sg_name_prefix=$sg_name_prefix -var revoke_rules_on_delete=$revoke_rules_on_delete -var sg_tags=$sg_tags -var sg_from_port=$sg_from_port -var sg_protocol=$sg_protocol -var sg_to_port=$sg_to_port -var sgr_description=$sgr_description -var ipv6_cidr_blocks=$ipv6_cidr_blocks -var sgr_prefix_list_ids=$sgr_prefix_list_ids -var cluster_name=$cluster_name -var endpoint_private_access=$endpoint_private_access -var endpoint_public_access=$endpoint_public_access -var public_access_cidrs=$public_access_cidrs -var enabled_cluster_log_types=$enabled_cluster_log_types -var eks_cluster_encryption_config=$eks_cluster_encryption_config -var kubernetes_network_config=$kubernetes_network_config -var outpost_config=$outpost_config -var cluster_tags=$cluster_tags -var cluster_version=$cluster_version -var oidc_tags=$oidc_tags -var desired_capacity=$desired_capacity -var max_capacity=$max_capacity -var min_capacity=$min_capacity -var eks_ami_type=$eks_ami_type -var capacity_type=$capacity_type -var disk_size=$disk_size -var force_update_version=$force_update_version -var instance_types=$instance_types -var labels=$labels -var launch_template=$launch_template -var node_group_name=$node_group_name -var node_group_name_prefix=$node_group_name_prefix -var release_version=$release_version -var remote_access=$remote_access -var node_group_tags=$node_group_tags -var taint=$taint -var node_group_version=$node_group_version -var lbControllerRoleName=$lbControllerRoleName -var accid=$accid -var oidc=$oidc -var loadBalancerControllerPolicy=$loadBalancerControllerPolicy -var loadBalancerControllerPolicyPath=$loadBalancerControllerPolicyPath -var aliases=$aliases -var cloudfront_comments=$cloudfront_comments -var custom_error_response=$custom_error_response -var allowed_methods=$allowed_methods -var cached_methods=$cached_methods -var compress=$compress -var default_ttl=$default_ttl -var field_level_encryption_id=$field_level_encryption_id -var forwarded_values=$forwarded_values -var lambda_function_association=$lambda_function_association -var function_association=$function_association -var max_ttl=$max_ttl -var min_ttl=$min_ttl -var origin_request_policy_id=$origin_request_policy_id -var realtime_log_config_arn=$realtime_log_config_arn -var response_headers_policy_id=$response_headers_policy_id -var smooth_streaming=$smooth_streaming -var address=$address -var trusted_key_groups=$trusted_key_groups -var trusted_signers=$trusted_signers -var viewer_protocol_policy=$viewer_protocol_policy -var default_root_object=$default_root_object -var enabled=$enabled -var is_ipv6_enabled=$is_ipv6_enabled -var http_version=$http_version -var logging_config=$logging_config -var connection_attempts=$connection_attempts -var connection_timeout=$connection_timeout -var custom_origin_config=$custom_origin_config -var custom_header=$custom_header -var origin_path=$origin_path -var origin_shield=$origin_shield -var price_class=$price_class -var restrictions=$restrictions -var cloudfront_tags=$cloudfront_tags -var viewer_certificate=$viewer_certificate -var web_acl_id=$web_acl_id -var retain_on_delete=$retain_on_delete -var wait_for_deployment=$wait_for_deployment --auto-approve
