@@ -84,7 +84,7 @@ variable "force_detach_policies" {
 
 variable "max_session_duration" {
   description = "Maximum session duration (in seconds) that you want to set for the specified role, if you do not specify a value for this setting, the default maximum of one hour is applied, this setting can have a value from 1 hour to 12 hours"
-  type = number
+  type = string
   default = 3600
 }
 
@@ -288,7 +288,7 @@ variable "capacity_type" {
 
 variable "disk_size" {
   description = "Disk size in GiB for worker nodes. Defaults to 50 for Windows, 20 all other node groups"
-  type = number
+  type = string
   default = null
 }
 
@@ -545,13 +545,13 @@ variable "logging_config" {
 
 variable "connection_attempts" {
   description = "Number of times that CloudFront attempts to connect to the origin, must be between 1-3, defaults to 3"
-  type = number
+  type = string
   default = null
 }
 
 variable "connection_timeout" {
   description = "Number of seconds that CloudFront waits when trying to establish a connection to the origin, must be between 1-10, defaults to 10"
-  type = number
+  type = string
   default = null
 }
 
