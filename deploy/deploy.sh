@@ -308,7 +308,7 @@ fi
 kubectl apply -f deployment.yaml -n $namespace
 kubectl apply -f service.yaml -n $namespace 
 kubectl apply -f ingress.yaml -n $namespace
-sleep 60
+sleep 120
 address=$(kubectl get ingress nodejs-ingress -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 
 cd ../infra
