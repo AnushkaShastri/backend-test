@@ -140,6 +140,8 @@ done < <(jq 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< ${!envObj} | 
 [[ -z "$web_acl_id" ]]
 [[ -z "$retain_on_delete" ]]
 [[ -z "$wait_for_deployment" ]]
+[[ -z "$namespace" ]]
+[[ -z "$replicas" ]]
 
 echo Following values will be used for deployment..
 echo region : $region
@@ -239,6 +241,8 @@ echo viewer_certificate : $viewer_certificate
 echo web_acl_id : $web_acl_id
 echo retain_on_delete : $retain_on_delete
 echo wait_for_deployment : $wait_for_deployment
+echo namespace : $namespace
+echo replicas : $replicas
 
 echo "Configuring AWS..."
 aws configure set aws_access_key_id $access_key && aws configure set aws_secret_access_key $secret_key && aws configure set region $region

@@ -96,6 +96,8 @@
         "viewer_certificate":[{"cloudfront_default_certificate":true}],
         "web_acl_id":null,
         "retain_on_delete":false,
-        "wait_for_deployment":false
+        "wait_for_deployment":false,
+        "namespace" : "default",
+        "replicas" : 2
     }
 }
