@@ -89,7 +89,7 @@
         "custom_origin_config":[{"http_port":"80","https_port":"443","origin_protocol_policy":"http-only","origin_ssl_protocols":["TLSv1.2"]}],
         "custom_header":[],
         "origin_path":null,
-        "origin_shield":{},
+        "origin_shield":[],
         "price_class":null,
         "restrictions":[{"restriction_type":"none"}],
         "cloudfront_tags":{},

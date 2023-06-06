@@ -156,7 +156,7 @@ variable "sg_tags" {
 
 variable "sg_from_port" {
   description = "Start port (or ICMP type number if protocol is 'icmp' or 'icmpv6')"
-  type    = number
+  type    = string
   default = 443
 }
 
@@ -168,7 +168,7 @@ variable "sg_protocol" {
 
 variable "sg_to_port" {
   description = "End port (or ICMP code if protocol is 'icmp')"
-  type    = number
+  type    = string
   default = 443
 }
 
@@ -258,19 +258,19 @@ variable "oidc_tags" {
 
 variable "desired_capacity" {
   description = "Desired number of worker nodes"
-  type    = number
+  type    = string
   default = "1"
 }
 
 variable "max_capacity" {
   description = "Maximum number of worker node"
-  type    = number
+  type    = string
   default = "2"
 }
 
 variable "min_capacity" {
   description = "Minimum number of worker node"
-  type    = number
+  type    = string
   default = "1"
 }
 
@@ -426,7 +426,7 @@ variable "compress" {
 
 variable "default_ttl" {
   description = "The default amount of time (in seconds) that an object is in a CloudFront cache before CloudFront forwards another request in the absence of an Cache-Control max-age or Expires header"
-  type        = number
+  type        = string
   default     = null
 }
 
@@ -456,13 +456,13 @@ variable "function_association" {
 
 variable "max_ttl" {
   description = "The maximum amount of time (in seconds) that an object is in a CloudFront cache before CloudFront forwards another request to your origin to determine whether the object has been updated. Only effective in the presence of Cache-Control max-age, Cache-Control s-maxage, and Expires headers"
-  type        = number
+  type        = string
   default     = null
 }
 
 variable "min_ttl" {
   description = "The minimum amount of time that you want objects to stay in CloudFront caches before CloudFront queries your origin to see whether the object has been updated. Defaults to 0 seconds"
-  type        = number
+  type        = string
   default     = null
 }
 
