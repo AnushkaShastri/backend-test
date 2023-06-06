@@ -9,13 +9,13 @@ provider "aws" {
   }
 }
 
-# terraform {
-#   backend "http" {
-#     update_method = "POST"
-#     lock_method   = "POST"
-#     unlock_method = "POST"
-#   }
-# }
+terraform {
+  backend "http" {
+    update_method = "POST"
+    lock_method   = "POST"
+    unlock_method = "POST"
+  }
+}
 
 locals {
   # vpc_id = var.aws_vpc_default ? null : var.vpc_id
