@@ -306,9 +306,11 @@ echo "Namespace already exists"
 fi
 
 kubectl apply -f deployment.yaml -n $namespace
+sleep 60
 kubectl apply -f service.yaml -n $namespace 
+sleep 60
 kubectl apply -f ingress.yaml -n $namespace
-sleep 120
+sleep 60
 address=$(kubectl get ingress nodejs-ingress -o jsonpath="{.status.loadBalancer.ingress[0].hostname}")
 
 cd ../infra
