@@ -42,8 +42,8 @@ variable "reponame" {
 
 variable "encryption_configuration" {
   description = "Encryption configuration for the repository"
-  type = map
-  default = {}
+  type = list
+  default = []
 }
 
 variable "force_delete" {
@@ -60,6 +60,12 @@ variable "image_tag_mutability" {
 
 variable "image_scanning_configuration" {
   description = "Configuration block that defines image scanning configuration for the repository"
+  type = list
+  default = []
+}
+
+variable "ecr_tags" {
+  description = "Map of tags for ecr repository"
   type = map
   default = {}
 }
@@ -124,14 +130,14 @@ variable "sg_ingress" {
   default = [] 
 }
 
-variable "sg_name" {
-  description = "Name of the security group, if omitted, Terraform will assign a random, unique name"
+variable "sg_name_prefix" {
+  description = "Creates a unique name beginning with the specified prefix, conflicts with name"
   type = string
   default = null
 }
 
-variable "sg_name_prefix" {
-  description = "Creates a unique name beginning with the specified prefix, conflicts with name"
+variable "sg_name" {
+  description = "Name of the security group, if omitted, Terraform will assign a random, unique name"
   type = string
   default = null
 }
@@ -216,20 +222,20 @@ variable "enabled_cluster_log_types" {
 
 variable "eks_cluster_encryption_config" {
   description = "Configuration block with encryption configuration for the cluster"
-  type = map
-  default = {}
+  type = list
+  default = []
 }
 
 variable "kubernetes_network_config" {
   description = "Configuration block with kubernetes network configuration for the cluster"
-  type = map
-  default = {}  
+  type = list
+  default = []  
 }
 
 variable "outpost_config" {
   description = "Configuration block representing the configuration of your local Amazon EKS cluster on an AWS Outpost"
-  type = map
-  default = {}   
+  type = list
+  default = []   
 }
 
 variable "cluster_tags" {
@@ -306,8 +312,8 @@ variable "labels" {
 
 variable "launch_template" {
   description = "Configuration block with Launch Template settings"
-  type = map
-  default = {}
+  type = list
+  default = []
 }
 
 variable "node_group_name" {
@@ -330,8 +336,8 @@ variable "release_version" {
 
 variable "remote_access" {
   description = "Configuration block with remote access settings"
-  type = map
-  default = null
+  type = list
+  default = []
 }
 
 variable "node_group_tags" {
@@ -432,8 +438,8 @@ variable "field_level_encryption_id" {
 
 variable "forwarded_values" {
   description = "The forwarded values configuration that specifies how CloudFront handles query strings, cookies and headers"
-  type = map
-  default = {"forward":"none","query_string":false}
+  type = list
+  default = [{"forward":"none","query_string":false}]
 }
 
 variable "lambda_function_association" {
@@ -533,8 +539,8 @@ variable "http_version" {
 
 variable "logging_config" {
   description = "The logging configuration that controls how logs are written to your distribution"
-  type = map
-  default = {}
+  type = list
+  default = []
 }
 
 variable "connection_attempts" {
@@ -551,8 +557,8 @@ variable "connection_timeout" {
 
 variable "custom_origin_config" {
   description = "The CloudFront custom origin configuration information"
-  type = map
-  default = {"http_port":"80","https_port":"443","origin_protocol_policy":"http-only","origin_ssl_protocols":["TLSv1.2"]}
+  type = list
+  default = [{"http_port":"80","https_port":"443","origin_protocol_policy":"http-only","origin_ssl_protocols":["TLSv1.2"]}]
 }
 
 variable "custom_header" {
@@ -569,8 +575,8 @@ variable "origin_path" {
 
 variable "origin_shield" {
   description = "The CloudFront Origin Shield configuration information"
-  type = map
-  default = {}
+  type = list
+  default = []
 }
 
 variable "price_class" {
@@ -581,8 +587,8 @@ variable "price_class" {
 
 variable "restrictions" {
   description = "The restriction configuration for this distribution"
-  type = map
-  default = {"restriction_type":"none"}
+  type = list
+  default = [{"restriction_type":"none"}]
 }
 
 variable "cloudfront_tags" {
@@ -593,8 +599,8 @@ variable "cloudfront_tags" {
 
 variable "viewer_certificate" {
   description = "The SSL configuration for this distribution"
-  type = map
-  default = {"cloudfront_default_certificate":true}
+  type = list
+  default = [{"cloudfront_default_certificate":true}]
 }
 
 variable "web_acl_id" {
@@ -655,31 +661,6 @@ variable "wait_for_deployment" {
 #   default = {"allowed_methods":["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"],"cached_methods":["GET", "HEAD", "OPTIONS"],"viewer_protocol_policy":"allow-all","query_string":false,"forward":"none"}
 # }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # variable "origin_shield_region" {
 #   description = "AWS Region for Origin Shield"
 #   type = string
@@ -703,35 +684,6 @@ variable "wait_for_deployment" {
 #   type        = string
 #   default     = null
 # }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # variable "forward_headers" {
 #   description = "Headers, if any, that you want CloudFront to vary upon for this cache behavior, specify * to include all headers"
@@ -757,26 +709,6 @@ variable "wait_for_deployment" {
 #   default = []
 # }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # variable "locations" {
 #   description = "ISO 3166-1-alpha-2 codes for which you want CloudFront either to distribute your content (whitelist) or not distribute your content (blacklist), if the type is specified as none an empty array can be used"  
 #   type = list
@@ -788,8 +720,6 @@ variable "wait_for_deployment" {
 #   type        = string
 #   default     = "none"
 # }
-
-
 
 # variable "acm_certificate_arn" {
 #   description = "ARN of the AWS Certificate Manager certificate that you wish to use with this distribution"
@@ -821,10 +751,6 @@ variable "wait_for_deployment" {
 #   default = null
 # }
 
-
-
-
-
 # variable "response_headers_policy_id" {
 #   type = string
 #   default = null
@@ -836,17 +762,6 @@ variable "wait_for_deployment" {
 #   default = false
 #   description = "Indicates whether you want to distribute media files in Microsoft Smooth Streaming format using the origin that is associated with this cache behavior"
 # }
-
-
-
-
-
-
-
-
-
-
-
 
 # variable "egress_from_port" {
 #   description = "Start port (or ICMP type number if protocol is icmp or icmpv6)"
@@ -871,32 +786,3 @@ variable "wait_for_deployment" {
 #   type        = list(any)
 #   default     = ["0.0.0.0/0"]
 # }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

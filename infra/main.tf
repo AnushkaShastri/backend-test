@@ -19,24 +19,30 @@ provider "aws" {
 
 locals {
   # vpc_id = var.aws_vpc_default ? null : var.vpc_id
-  workstation-external-cidr        = "${chomp(data.http.workstation-external-ip.body)}/32"
-  force_delete                     = var.force_delete == "null" ? null : var.force_delete
-  image_tag_mutability             = var.image_tag_mutability == "null" ? null : var.image_tag_mutability
-  iam_role_description             = var.iam_role_description == "null" ? null : var.iam_role_description
-  force_detach_policies            = var.force_detach_policies == "null" ? null : var.force_detach_policies
-  max_session_duration             = var.max_session_duration == "null" ? null : var.max_session_duration
-  iam_path                         = var.iam_path == "null" ? null : var.iam_path
-  iam_role_name                    = (var.iam_role_name == "null" || var.iam_role_name == null) ? null : "${var.env}-${var.iam_role_name}"
-  iam_role_prefix                  = (var.iam_role_prefix == "null" || var.iam_role_prefix == null) ? null : "${var.env}-${var.iam_role_prefix}"
-  sg_description                   = var.sg_description == "null" ? null : var.sg_description
-  sg_name                          = (var.sg_name == "null" || var.sg_name == null) ? null : "${var.env}-${var.sg_name}"
-  sg_name_prefix                   = (var.sg_name_prefix == "null" || var.sg_name_prefix == null) ? null : "${var.env}-${var.sg_name_prefix}"
-  revoke_rules_on_delete           = var.revoke_rules_on_delete == "null" ? null : var.revoke_rules_on_delete
-  version                          = var.cluster_version == "null" ? null : var.cluster_version
+  force_delete              = var.force_delete == "null" ? null : var.force_delete
+  image_tag_mutability      = var.image_tag_mutability == "null" ? null : var.image_tag_mutability
+  iam_role_description      = var.iam_role_description == "null" ? null : var.iam_role_description
+  force_detach_policies     = var.force_detach_policies == "null" ? null : var.force_detach_policies
+  max_session_duration      = var.max_session_duration == "null" ? null : var.max_session_duration
+  iam_path                  = var.iam_path == "null" ? null : var.iam_path
+  iam_role_name             = (var.iam_role_name == "null" || var.iam_role_name == null) ? null : "${var.env}-${var.iam_role_name}"
+  iam_role_prefix           = (var.iam_role_prefix == "null" || var.iam_role_prefix == null) ? null : "${var.env}-${var.iam_role_prefix}"
+  sg_description            = var.sg_description == "null" ? null : var.sg_description
+  sg_name                   = (var.sg_name == "null" || var.sg_name == null) ? null : "${var.env}-${var.sg_name}"
+  sg_name_prefix            = (var.sg_name_prefix == "null" || var.sg_name_prefix == null) ? null : "${var.env}-${var.sg_name_prefix}"
+  revoke_rules_on_delete    = var.revoke_rules_on_delete == "null" ? null : var.revoke_rules_on_delete
+  workstation-external-cidr = "${chomp(data.http.workstation-external-ip.body)}/32"
+  sgr_description           = var.sgr_description == "null" ? null : var.sgr_description
+  endpoint_private_access   = var.endpoint_private_access == "null" ? null : var.endpoint_private_access
+  endpoint_public_access    = var.endpoint_public_access == "null" ? null : var.endpoint_public_access
+  cluster_version                          = var.cluster_version == "null" ? null : var.cluster_version
   eks_ami_type                     = var.eks_ami_type == "null" ? null : var.eks_ami_type
   capacity_type                    = var.capacity_type == "null" ? null : var.capacity_type
   disk_size                        = var.disk_size == "null" ? null : var.disk_size
   force_update_version             = var.force_update_version == "null" ? null : var.force_update_version
+  node_group_name             = (var.node_group_name == "null" || var.node_group_name == null) ? null : "${var.env}-${var.node_group_name}"
+  node_group_name_prefix      = (var.node_group_name_prefix == "null" || var.node_group_name_prefix == null) ? null : "${var.env}-${var.node_group_name_prefix}"
+  release_version             = var.release_version == "null" ? null : var.release_version
   node_group_version               = var.node_group_version == "null" ? null : var.node_group_version
   loadBalancerControllerPolicyPath = var.loadBalancerControllerPolicyPath == "null" ? null : var.loadBalancerControllerPolicyPath
   aliases                          = var.aliases == "null" ? null : var.aliases
@@ -56,17 +62,15 @@ locals {
   http_version                     = var.http_version == "null" ? null : var.http_version
   connection_attempts              = var.connection_attempts == "null" ? null : var.connection_attempts
   connection_timeout               = var.connection_timeout == "null" ? null : var.connection_timeout
-  origin_keepalive_timeout         = var.origin_keepalive_timeout == "null" ? null : var.origin_keepalive_timeout
-  origin_read_timeout              = var.origin_read_timeout == "null" ? null : var.origin_read_timeout
-  origin_path         = var.origin_path == "null" ? null : var.origin_path
-  price_class         = var.price_class == "null" ? null : var.price_class
-  web_acl_id          = var.web_acl_id == "null" ? null : var.web_acl_id
-  retain_on_delete    = var.retain_on_delete == "null" ? null : var.retain_on_delete
-  wait_for_deployment = var.wait_for_deployment == "null" ? null : var.wait_for_deployment
+  origin_path                      = var.origin_path == "null" ? null : var.origin_path
+  price_class                      = var.price_class == "null" ? null : var.price_class
+  web_acl_id                       = var.web_acl_id == "null" ? null : var.web_acl_id
+  retain_on_delete                 = var.retain_on_delete == "null" ? null : var.retain_on_delete
+  wait_for_deployment              = var.wait_for_deployment == "null" ? null : var.wait_for_deployment
 
-
-
-  # sgr_description             = var.sgr_description == "null" ? null : var.sgr_description
+  
+  # origin_keepalive_timeout         = var.origin_keepalive_timeout == "null" ? null : var.origin_keepalive_timeout
+  # origin_read_timeout              = var.origin_read_timeout == "null" ? null : var.origin_read_timeout
   # encryption_config           = var.encryption_config == false ? [] : [{}]
   # service_ipv4_cidr           = var.service_ipv4_cidr == "null" ? null : var.service_ipv4_cidr
   # ip_family                   = var.ip_family == "null" ? null : var.ip_family
@@ -77,22 +81,16 @@ locals {
   # launch_template_id          = var.launch_template_id == "null" ? null : var.launch_template_id
   # launch_template_name        = var.launch_template_name == "null" ? null : var.launch_template_name
   # launch_template_version     = var.launch_template_version == "null" ? null : var.launch_template_version
-  # node_group_name             = (var.node_group_name == "null" || var.node_group_name == null) ? null : "${var.env}-${var.node_group_name}"
-  # node_group_name_prefix      = (var.node_group_name_prefix == "null" || var.node_group_name_prefix == null) ? null : "${var.env}-${var.node_group_name_prefix}"
-  # release_version             = var.release_version == "null" ? null : var.release_version
   # ec2_ssh_key                 = var.ec2_ssh_key == "null" ? null : var.ec2_ssh_key
   # default_ttl                 = var.default_ttl == "null" ? null : var.default_ttl
   # field_level_encryption_id   = var.field_level_encryption_id == "null" ? null : var.field_level_encryption_id
   # # whitelisted_names = var.whitelisted_names == "null" ? null : var.whitelisted_names
-
-
   # origin_shield            = var.origin_shield == false ? [] : [{}]
   # origin_shield_region     = var.origin_shield_region == "null" ? null : var.origin_shield_region
   # acm_certificate_arn      = var.acm_certificate_arn == "null" ? null : var.acm_certificate_arn
   # iam_certificate_id       = var.iam_certificate_id == "null" ? null : var.iam_certificate_id
   # minimum_protocol_version = var.minimum_protocol_version == "null" ? null : var.minimum_protocol_version
   # ssl_support_method       = var.ssl_support_method == "null" ? null : var.ssl_support_method
-
 }
 
 ##############################################################
@@ -110,7 +108,7 @@ data "aws_subnets" "all" {
   filter {
     name = "vpc-id"
     # values = [data.aws_vpc.vpc.id]
-    values = var.vpc_id
+    values = [var.vpc_id]
   }
 }
 
@@ -132,7 +130,7 @@ data "http" "workstation-external-ip" {
 resource "aws_ecr_repository" "app_container_ecr_repo" {
   name = "${var.env}-${var.reponame}"
   dynamic "encryption_configuration" {
-    for_each = length(var.encryption_configuration) == 0 ? [] : [var.encryption_configuration]
+    for_each = var.encryption_configuration
     content {
       encryption_type = lookup(encryption_configuration.value, "ecr_encryption_type", null)
       kms_key         = lookup(encryption_configuration.value, "ecr_kms_key", null)
@@ -142,7 +140,7 @@ resource "aws_ecr_repository" "app_container_ecr_repo" {
   image_tag_mutability = local.image_tag_mutability
 
   dynamic "image_scanning_configuration" {
-    for_each = length(var.image_scanning_configuration) == 0 ? [] : [var.image_scanning_configuration]
+    for_each = var.image_scanning_configuration
     content {
       scan_on_push = lookup(image_scanning_configuration.value, "scan_on_push", null)
     }
@@ -271,13 +269,13 @@ resource "aws_eks_cluster" "k8_cluster" {
   vpc_config {
     security_group_ids      = [aws_security_group.k8_cluster.id]
     subnet_ids              = data.aws_subnets.all.ids
-    endpoint_private_access = var.endpoint_private_access
-    endpoint_public_access  = var.endpoint_public_access
+    endpoint_private_access = local.endpoint_private_access
+    endpoint_public_access  = local.endpoint_public_access
     public_access_cidrs     = var.public_access_cidrs
   }
   enabled_cluster_log_types = var.enabled_cluster_log_types
   dynamic "encryption_config" {
-    for_each = length(var.eks_cluster_encryption_config) == 0 ? [] : [var.eks_cluster_encryption_config]
+    for_each = var.eks_cluster_encryption_config
     content {
       provider {
         key_arn = lookup(encryption_config.value, "key_arn", null)
@@ -286,14 +284,14 @@ resource "aws_eks_cluster" "k8_cluster" {
     }
   }
   dynamic "kubernetes_network_config" {
-    for_each = length(var.kubernetes_network_config) == 0 ? [] : [var.kubernetes_network_config]
+    for_each = var.kubernetes_network_config
     content {
       service_ipv4_cidr = lookup(kubernetes_network_config.value, "service_ipv4_cidr", null)
       ip_family         = lookup(kubernetes_network_config.value, "ip_family", null)
     }
   }
   dynamic "outpost_config" {
-    for_each = length(var.outpost_config) == 0 ? [] : [var.outpost_config]
+    for_each = var.outpost_config
     content {
       control_plane_instance_type = outpost_config.value.control_plane_instance_type
       control_plane_placement {
@@ -374,7 +372,7 @@ resource "aws_eks_node_group" "k8_cluster" {
   instance_types       = var.instance_types
   labels               = var.labels
   dynamic "launch_template" {
-    for_each = length(var.launch_template) == 0 ? [] : [var.launch_template]
+    for_each = var.launch_template
     content {
       id      = lookup(launch_template.value, "launch_template_id", null)
       name    = lookup(launch_template.value, "launch_template_name", null)
@@ -385,7 +383,7 @@ resource "aws_eks_node_group" "k8_cluster" {
   node_group_name_prefix = local.node_group_name_prefix
   release_version        = local.release_version
   dynamic "remote_access" {
-    for_each = length(var.remote_access) == 0 ? [] : [var.remote_access]
+    for_each = var.remote_access
     content {
       ec2_ssh_key               = lookup(remote_access.value, "ec2_ssh_key", null)
       source_security_group_ids = lookup(remote_access.value, "source_security_group_ids", null)
@@ -463,7 +461,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     default_ttl               = local.default_ttl
     field_level_encryption_id = local.field_level_encryption_id
     dynamic "forwarded_values" {
-      for_each = length(var.forwarded_values) == 0 ? [] : [var.forwarded_values]
+      for_each = var.forwarded_values
       content {
         cookies {
           forward           = lookup(forwarded_values.value, "forward", null)
@@ -500,14 +498,13 @@ resource "aws_cloudfront_distribution" "distribution" {
     trusted_key_groups         = var.trusted_key_groups
     trusted_signers            = var.trusted_signers
     viewer_protocol_policy     = var.viewer_protocol_policy
-
   }
   default_root_object = local.default_root_object
   enabled             = local.enabled
   is_ipv6_enabled     = local.is_ipv6_enabled
   http_version        = local.http_version
   dynamic "logging_config" {
-    for_each = length(var.logging_config) == 0 ? [] : [var.logging_config]
+    for_each = var.logging_config
     content {
       bucket          = lookup(logging_config.value, "log_bucket", null)
       include_cookies = lookup(logging_config.value, "log_include_cookies", null)
@@ -539,7 +536,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     }
     origin_path = local.origin_path
     dynamic "origin_shield" {
-      for_each = length(var.origin_shield) == 0 ? [] : [var.origin_shield]
+      for_each = var.origin_shield
       content {
         enabled              = lookup(origin_shield.value, "origin_shield_enabled", null)
         origin_shield_region = lookup(origin_shield.value, "origin_shield_region", null)
@@ -558,7 +555,7 @@ resource "aws_cloudfront_distribution" "distribution" {
   }
   tags = var.cloudfront_tags
   dynamic "viewer_certificate" {
-    for_each = length(var.viewer_certificate) == 0 ? [] : [var.viewer_certificate]
+    for_each = var.viewer_certificate
     content {
       cloudfront_default_certificate = lookup(viewer_certificate.value, "cloudfront_default_certificate", null)
       minimum_protocol_version       = lookup(viewer_certificate.value, "minimum_protocol_version", null)
