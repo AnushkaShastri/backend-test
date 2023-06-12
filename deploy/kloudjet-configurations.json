@@ -1,7 +1,7 @@
 {
     "dev": {
         "region": "us-west-1",
-        "vpc_id": "",
+        "vpc_id": "vpc-f9ea1e9f",
         "reponame": "kj-nodejs-eks-repo",
         "encryption_configuration": [],
         "force_delete": true,
