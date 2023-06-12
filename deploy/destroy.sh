@@ -45,103 +45,103 @@ done < <(jq 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< ${!envObj} | 
 
 [[ -z "$region" ]] && region="us-west-1"
 [[ -z "$vpc_id" ]] && echo "VPC Id is required" && exit 1
-[[ -z "$reponame" ]]
-[[ -z "$encryption_configuration" ]]
-[[ -z "$force_delete" ]]
-[[ -z "$image_tag_mutability" ]]
-[[ -z "$image_scanning_configuration" ]]
-[[ -z "$ecr_tags" ]]
-[[ -z "$iam_role_description" ]]
-[[ -z "$force_detach_policies" ]]
-[[ -z "$max_session_duration" ]]
-[[ -z "$iam_path" ]]
-[[ -z "$iam_role_name" ]]
-[[ -z "$iam_role_prefix" ]]
-[[ -z "$iam_role_tags" ]]
-[[ -z "$sg_description" ]]
-[[ -z "$sg_egress" ]]
-[[ -z "$sg_ingress" ]]
-[[ -z "$sg_name_prefix" ]]
-[[ -z "$sg_name" ]]
-[[ -z "$revoke_rules_on_delete" ]]
-[[ -z "$sg_tags" ]]
-[[ -z "$sg_from_port" ]]
-[[ -z "$sg_protocol" ]]
-[[ -z "$sg_to_port" ]]
-[[ -z "$sgr_description" ]]
-[[ -z "$ipv6_cidr_blocks" ]]
-[[ -z "$sgr_prefix_list_ids" ]]
-[[ -z "$cluster_name" ]]
-[[ -z "$endpoint_private_access" ]]
-[[ -z "$endpoint_public_access" ]]
-[[ -z "$public_access_cidrs" ]]
-[[ -z "$enabled_cluster_log_types" ]]
-[[ -z "$eks_cluster_encryption_config" ]]
-[[ -z "$kubernetes_network_config" ]]
-[[ -z "$outpost_config" ]]
-[[ -z "$cluster_tags" ]]
-[[ -z "$cluster_version" ]]
-[[ -z "$oidc_tags" ]]
-[[ -z "$desired_capacity" ]]
-[[ -z "$max_capacity" ]]
-[[ -z "$min_capacity" ]]
-[[ -z "$eks_ami_type" ]]
-[[ -z "$capacity_type" ]]
-[[ -z "$disk_size" ]]
-[[ -z "$force_update_version" ]]
-[[ -z "$instance_types" ]]
-[[ -z "$labels" ]]
-[[ -z "$launch_template" ]]
-[[ -z "$node_group_name" ]]
-[[ -z "$node_group_name_prefix" ]]
-[[ -z "$release_version" ]]
-[[ -z "$remote_access" ]]
-[[ -z "$node_group_tags" ]]
-[[ -z "$taint" ]]
-[[ -z "$node_group_version" ]]
-[[ -z "$lbControllerRoleName" ]]
-[[ -z "$loadBalancerControllerPolicy" ]]
-[[ -z "$loadBalancerControllerPolicyPath" ]]
-[[ -z "$aliases" ]]
-[[ -z "$cloudfront_comments" ]]
-[[ -z "$custom_error_response" ]]
-[[ -z "$allowed_methods" ]]
-[[ -z "$cached_methods" ]]
-[[ -z "$compress" ]]
-[[ -z "$default_ttl" ]]
-[[ -z "$field_level_encryption_id" ]]
-[[ -z "$forwarded_values" ]]
-[[ -z "$lambda_function_association" ]]
-[[ -z "$function_association" ]]
-[[ -z "$max_ttl" ]]
-[[ -z "$min_ttl" ]]
-[[ -z "$origin_request_policy_id" ]]
-[[ -z "$realtime_log_config_arn" ]]
-[[ -z "$response_headers_policy_id" ]]
-[[ -z "$smooth_streaming" ]]
-[[ -z "$trusted_key_groups" ]]
-[[ -z "$trusted_signers" ]]
-[[ -z "$viewer_protocol_policy" ]]
-[[ -z "$default_root_object" ]]
-[[ -z "$enabled" ]]
-[[ -z "$is_ipv6_enabled" ]]
-[[ -z "$http_version" ]]
-[[ -z "$logging_config" ]]
-[[ -z "$connection_attempts" ]]
-[[ -z "$connection_timeout" ]]
-[[ -z "$custom_origin_config" ]]
-[[ -z "$custom_header" ]]
-[[ -z "$origin_path" ]]
-[[ -z "$origin_shield" ]]
-[[ -z "$price_class" ]]
-[[ -z "$restrictions" ]]
-[[ -z "$cloudfront_tags" ]]
-[[ -z "$viewer_certificate" ]]
-[[ -z "$web_acl_id" ]]
-[[ -z "$retain_on_delete" ]]
-[[ -z "$wait_for_deployment" ]]
-[[ -z "$namespace" ]]
-[[ -z "$replicas" ]]
+[[ -z "$reponame" ]] && reponame="kj-nodejs-eks-repo"
+[[ -z "$encryption_configuration" ]] && encryption_configuration=[]
+[[ -z "$force_delete" ]] && force_delete=true
+[[ -z "$image_tag_mutability" ]] && image_tag_mutability="IMMUTABLE"
+[[ -z "$image_scanning_configuration" ]] && image_scanning_configuration=[]
+[[ -z "$ecr_tags" ]] && ecr_tags={}
+[[ -z "$iam_role_description" ]] && iam_role_description=null
+[[ -z "$force_detach_policies" ]] && force_detach_policies=true
+[[ -z "$max_session_duration" ]] && max_session_duration=3600
+[[ -z "$iam_path" ]] && iam_path="/"
+[[ -z "$iam_role_name" ]] && iam_role_name="kloudjet-nodejs-app-iam-role"
+[[ -z "$iam_role_prefix" ]] && iam_role_prefix=null
+[[ -z "$iam_role_tags" ]] && iam_role_tags={}
+[[ -z "$sg_description" ]] && sg_description=null
+[[ -z "$sg_egress" ]] && sg_egress="[{\"sg_egress_from_port\":0,\"sg_egress_to_port\": 0,\"sg_egress_protocol\": \"-1\",\"sg_egress_cidr_blocks\": [\"0.0.0.0/0\"]}]"
+[[ -z "$sg_ingress" ]] && sg_ingress=[]
+[[ -z "$sg_name_prefix" ]] && sg_name_prefix=null
+[[ -z "$sg_name" ]] && sg_name=null
+[[ -z "$revoke_rules_on_delete" ]] && revoke_rules_on_delete=false
+[[ -z "$sg_tags" ]] && sg_tags={}
+[[ -z "$sg_from_port" ]] && sg_from_port=443
+[[ -z "$sg_protocol" ]] && sg_protocol="tcp"
+[[ -z "$sg_to_port" ]] && sg_to_port=443
+[[ -z "$sgr_description" ]] && sgr_description=null
+[[ -z "$ipv6_cidr_blocks" ]] && ipv6_cidr_blocks=[]
+[[ -z "$sgr_prefix_list_ids" ]] && sgr_prefix_list_ids=[]
+[[ -z "$cluster_name" ]] && cluster_name="K8_Cluster_nodejs"
+[[ -z "$endpoint_private_access" ]] && endpoint_private_access=false
+[[ -z "$endpoint_public_access" ]] && endpoint_public_access=true
+[[ -z "$public_access_cidrs" ]] && public_access_cidrs="[\"0.0.0.0/0\"]"
+[[ -z "$enabled_cluster_log_types" ]] && enabled_cluster_log_types=[]
+[[ -z "$eks_cluster_encryption_config" ]] && eks_cluster_encryption_config=[]
+[[ -z "$kubernetes_network_config" ]] && kubernetes_network_config=[]
+[[ -z "$outpost_config" ]] && outpost_config=[]
+[[ -z "$cluster_tags" ]] && cluster_tags={}
+[[ -z "$cluster_version" ]] && cluster_version=null
+[[ -z "$oidc_tags" ]] && oidc_tags={}
+[[ -z "$desired_capacity" ]] && desired_capacity=1
+[[ -z "$max_capacity" ]] && max_capacity=2
+[[ -z "$min_capacity" ]] && min_capacity=1
+[[ -z "$eks_ami_type" ]] && eks_ami_type=null
+[[ -z "$capacity_type" ]] && capacity_type=null
+[[ -z "$disk_size" ]] && disk_size=null
+[[ -z "$force_update_version" ]] && force_update_version=null
+[[ -z "$instance_types" ]] && instance_types="[\"t3.medium\"]"
+[[ -z "$labels" ]] && labels={}
+[[ -z "$launch_template" ]] && launch_template=[]
+[[ -z "$node_group_name" ]] && node_group_name="K8_Cluster_nodejs"
+[[ -z "$node_group_name_prefix" ]] && node_group_name_prefix=null
+[[ -z "$release_version" ]] && release_version=null
+[[ -z "$remote_access" ]] && remote_access=[]
+[[ -z "$node_group_tags" ]] && node_group_tags={}
+[[ -z "$taint" ]] && taint=[]
+[[ -z "$node_group_version" ]] && node_group_version=null
+[[ -z "$lbControllerRoleName" ]] && lbControllerRoleName="nodejsAmazonEKSLoadBalancerControllerRole"
+[[ -z "$loadBalancerControllerPolicy" ]] && loadBalancerControllerPolicy="nodejsAWSLoadBalancerControllerIAMPolicy"
+[[ -z "$loadBalancerControllerPolicyPath" ]] && loadBalancerControllerPolicyPath="/"
+[[ -z "$aliases" ]] && aliases=[]
+[[ -z "$cloudfront_comments" ]] && cloudfront_comments=null
+[[ -z "$custom_error_response" ]] && custom_error_response=[]
+[[ -z "$allowed_methods" ]] && allowed_methods="[\"DELETE\",\"GET\",\"HEAD\",\"OPTIONS\",\"PATCH\",\"POST\",\"PUT\"]"
+[[ -z "$cached_methods" ]] && cached_methods="[\"GET\",\"HEAD\",\"OPTIONS\"]"
+[[ -z "$compress" ]] && compress=false
+[[ -z "$default_ttl" ]] && default_ttl=null
+[[ -z "$field_level_encryption_id" ]] && field_level_encryption_id=null
+[[ -z "$forwarded_values" ]] && forwarded_values="[{\"forward\":\"none\",\"query_string\":false}]"
+[[ -z "$lambda_function_association" ]] && lambda_function_association=[]
+[[ -z "$function_association" ]] && function_association=[]
+[[ -z "$max_ttl" ]] && max_ttl=null
+[[ -z "$min_ttl" ]] && min_ttl=null
+[[ -z "$origin_request_policy_id" ]] && origin_request_policy_id=null
+[[ -z "$realtime_log_config_arn" ]] && realtime_log_config_arn=null
+[[ -z "$response_headers_policy_id" ]] && response_headers_policy_id=null
+[[ -z "$smooth_streaming" ]] && smooth_streaming=false
+[[ -z "$trusted_key_groups" ]] && trusted_key_groups=[]
+[[ -z "$trusted_signers" ]] && trusted_signers=[]
+[[ -z "$viewer_protocol_policy" ]] && viewer_protocol_policy="allow-all"
+[[ -z "$default_root_object" ]] && default_root_object=null
+[[ -z "$enabled" ]] && enabled=true
+[[ -z "$is_ipv6_enabled" ]] && is_ipv6_enabled=false
+[[ -z "$http_version" ]] && http_version=null
+[[ -z "$logging_config" ]] && logging_config=[]
+[[ -z "$connection_attempts" ]] && connection_attempts=null
+[[ -z "$connection_timeout" ]] && connection_timeout=null
+[[ -z "$custom_origin_config" ]] && custom_origin_config="[{\"http_port\":\"80\",\"https_port\":\"443\",\"origin_protocol_policy\":\"http-only\",\"origin_ssl_protocols\":[\"TLSv1.2\"]}]"
+[[ -z "$custom_header" ]] && custom_header=[]
+[[ -z "$origin_path" ]] && origin_path=null
+[[ -z "$origin_shield" ]] && origin_shield=[]
+[[ -z "$price_class" ]] && price_class=null
+[[ -z "$restrictions" ]] && restrictions="[{\"restriction_type\":\"none\"}]"
+[[ -z "$cloudfront_tags" ]] && cloudfront_tags={}
+[[ -z "$viewer_certificate" ]] && viewer_certificate="[{\"cloudfront_default_certificate\":true}]"
+[[ -z "$web_acl_id" ]] && web_acl_id=null
+[[ -z "$retain_on_delete" ]] && retain_on_delete=false
+[[ -z "$wait_for_deployment" ]] && wait_for_deployment=false
+[[ -z "$namespace" ]] && namespace="default"
+[[ -z "$replicas" ]] && replicas=2
 
 echo region : $region
 echo vpc_id : $vpc_id

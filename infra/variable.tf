@@ -97,7 +97,7 @@ variable "iam_path" {
 variable "iam_role_name" {
   description = "Name of the IAM role, if omitted, Terraform will assign a random, unique name"
   type        = string
-  default     = "kloudjet-node-app-iam-role"
+  default     = "kloudjet-nodejs-app-iam-role"
 }
 
 variable "iam_role_prefix" {
@@ -193,7 +193,7 @@ variable "sgr_prefix_list_ids" {
 variable "cluster_name" {
   description = "Name of the cluster, must be between 1-100 characters in length, must begin with an alphanumeric character, and must only contain alphanumeric characters, dashes and underscores '(^[0-9A-Za-z][A-Za-z0-9\\-_]+$)'"
   type    = string
-  default = "K8_Cluster"
+  default = "K8_Cluster_nodejs"
 }
 
 variable "endpoint_private_access"{
@@ -319,7 +319,7 @@ variable "launch_template" {
 variable "node_group_name" {
   description = "Name of the EKS Node Group. If omitted, Terraform will assign a random, unique name. Conflicts with node_group_name_prefix"
   type    = string
-  default = "k8_cluster"
+  default = "k8_cluster_nodejs"
 }
 
 variable "node_group_name_prefix" {
@@ -361,7 +361,7 @@ variable "node_group_version" {
 variable "lbControllerRoleName" {
   description = "Name of the IAM role for load balancer controller, if omitted, Terraform will assign a random, unique name"
   type = string
-  default = "AmazonEKSLoadBalancerControllerRole"
+  default = "nodejsEKSLoadBalancerControllerRole"
 }
 
 variable "accid" {
@@ -379,7 +379,7 @@ variable "oidc" {
 variable "loadBalancerControllerPolicy" {
   description = "Name of the IAM policy for load balancer controller, if omitted, Terraform will assign a random, unique name"
   type = string
-  default = "AWSLoadBalancerControllerIAMPolicy"
+  default = "nodejsLoadBalancerControllerIAMPolicy"
 }
 
 variable "loadBalancerControllerPolicyPath" {
@@ -620,169 +620,3 @@ variable "wait_for_deployment" {
   type = bool
   default = false
 }
-# variable "origin_protocol_policy" {
-#   description = "The origin protocol policy to apply to your origin. One of http-only, https-only, or match-viewer"
-#   type        = string
-#   default     = "http-only"
-# }
-
-# variable "http_port" {
-#   description = "The HTTP port the custom origin listens on"
-#   type        = string
-#   default     = "80"
-# }
-
-# variable "https_port" {
-#   description = "The HTTPS port the custom origin listens on"
-#   type        = string
-#   default     = "443"
-# }
-
-# variable "origin_ssl_protocols" {
-#   description = "The SSL/TLS protocols that you want CloudFront to use when communicating with your origin over HTTPS. A list of one or more of SSLv3, TLSv1, TLSv1.1, and TLSv1.2"
-#   type        = list(any)
-#   default     = ["TLSv1.2"]
-# }
-
-# variable "origin_keepalive_timeout" {
-#   description = "The Custom KeepAlive timeout, in seconds, by default, AWS enforces a limit of 60, but you can request an increase"
-#   type = number
-#   default = null
-# }
-
-# variable "origin_read_timeout" {
-#   description = "The Custom Read timeout, in seconds, by default, AWS enforces a limit of 60, but you can request an increase"
-#   type = number
-#   default = null
-# }
-# variable "default_cache_behavior" {
-#   description = "Default cache behavior for this distribution"
-#   type = map
-#   default = {"allowed_methods":["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"],"cached_methods":["GET", "HEAD", "OPTIONS"],"viewer_protocol_policy":"allow-all","query_string":false,"forward":"none"}
-# }
-
-# variable "origin_shield_region" {
-#   description = "AWS Region for Origin Shield"
-#   type = string
-#   default = null
-# }
-
-# variable "log_bucket" {
-#   description = "Amazon S3 bucket to store the access logs in"
-#   type = string
-#   default = null
-# }
-
-# variable "log_include_cookies" {
-#   description = "Specifies whether you want CloudFront to include cookies in access logs"
-#   type        = bool
-#   default     = false
-# }
-
-# variable "log_prefix" {
-#   description = "An optional string that you want CloudFront to prefix to the access log filenames for this distribution"
-#   type        = string
-#   default     = null
-# }
-
-# variable "forward_headers" {
-#   description = "Headers, if any, that you want CloudFront to vary upon for this cache behavior, specify * to include all headers"
-#   type = list
-#   default = []
-# }
-
-# variable "query_string" {
-#   description = "Indicates whether you want CloudFront to forward query strings to the origin that is associated with this cache behavior"
-#   type = bool
-#   default = false
-# }
-
-# variable "forward" {
-#   description = "Whether you want CloudFront to forward cookies to the origin that is associated with this cache behavior. You can specify all, none or whitelist. If whitelist, you must include the subsequent whitelisted_names"
-#   type = string
-#   default = "none"
-# }
-
-# variable "whitelisted_names" {
-#   description = "If you have specified whitelist to forward, the whitelisted cookies that you want CloudFront to forward to your origin"
-#   type = list
-#   default = []
-# }
-
-# variable "locations" {
-#   description = "ISO 3166-1-alpha-2 codes for which you want CloudFront either to distribute your content (whitelist) or not distribute your content (blacklist), if the type is specified as none an empty array can be used"  
-#   type = list
-#   default = []
-# }
-
-# variable "restriction_type" {
-#   description = "The method that you want to use to restrict distribution of your content by country: none, whitelist, or blacklist"
-#   type        = string
-#   default     = "none"
-# }
-
-# variable "acm_certificate_arn" {
-#   description = "ARN of the AWS Certificate Manager certificate that you wish to use with this distribution"
-#   type = string
-#   default = null
-# }
-
-# variable "cloudfront_default_certificate" {
-#   description = "True if you want viewers to use HTTPS to request your objects and you're using the CloudFront domain name for your distribution. Specify this, acm_certificate_arn, or iam_certificate_id"
-#   type        = bool
-#   default     = true
-# }
-
-# variable "iam_certificate_id" {
-#   description = "IAM certificate identifier of the custom viewer certificate for this distribution if you are using a custom domain"
-#   type = string
-#   default = null
-# }
-
-# variable "minimum_protocol_version" {
-#   description = "Minimum version of the SSL protocol that you want CloudFront to use for HTTPS connections"
-#   type = string
-#   default = null
-# }
-
-# variable "ssl_support_method" {
-#   description = "How you want CloudFront to serve HTTPS requests"
-#   type = string
-#   default = null
-# }
-
-# variable "response_headers_policy_id" {
-#   type = string
-#   default = null
-#   description = "Identifier for a response headers policy"
-# }
-
-# variable "smooth_streaming" {
-#   type = bool
-#   default = false
-#   description = "Indicates whether you want to distribute media files in Microsoft Smooth Streaming format using the origin that is associated with this cache behavior"
-# }
-
-# variable "egress_from_port" {
-#   description = "Start port (or ICMP type number if protocol is icmp or icmpv6)"
-#   type        = number
-#   default     = 0
-# }
-
-# variable "egress_to_port" {
-#   description = "End range port (or ICMP code if protocol is icmp"
-#   type        = number
-#   default     = 0
-# }
-
-# variable "egress_protocol" {
-#   description = "Protocol. If you select a protocol of -1 (semantically equivalent to all, which is not a valid value here), you must specify a from_port and to_port equal to 0"
-#   type        = string
-#   default     = "-1"
-# }
-
-# variable "egress_cidr_blocks" {
-#   description = "List of CIDR blocks"
-#   type        = list(any)
-#   default     = ["0.0.0.0/0"]
-# }

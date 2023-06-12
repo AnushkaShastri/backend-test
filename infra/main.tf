@@ -18,7 +18,6 @@ terraform {
 }
 
 locals {
-  # vpc_id = var.aws_vpc_default ? null : var.vpc_id
   force_delete              = var.force_delete == "null" ? null : var.force_delete
   image_tag_mutability      = var.image_tag_mutability == "null" ? null : var.image_tag_mutability
   iam_role_description      = var.iam_role_description == "null" ? null : var.iam_role_description
@@ -67,47 +66,11 @@ locals {
   web_acl_id                       = var.web_acl_id == "null" ? null : var.web_acl_id
   retain_on_delete                 = var.retain_on_delete == "null" ? null : var.retain_on_delete
   wait_for_deployment              = var.wait_for_deployment == "null" ? null : var.wait_for_deployment
-
-  
-  # origin_keepalive_timeout         = var.origin_keepalive_timeout == "null" ? null : var.origin_keepalive_timeout
-  # origin_read_timeout              = var.origin_read_timeout == "null" ? null : var.origin_read_timeout
-  # encryption_config           = var.encryption_config == false ? [] : [{}]
-  # service_ipv4_cidr           = var.service_ipv4_cidr == "null" ? null : var.service_ipv4_cidr
-  # ip_family                   = var.ip_family == "null" ? null : var.ip_family
-  # outpost_config              = var.outpost_config == false ? [] : [{}]
-  # control_plane_instance_type = var.control_plane_instance_type == "null" ? null : var.control_plane_instance_type
-  # group_name                  = var.group_name == "null" ? null : var.group_name
-  # launch_template             = var.launch_template == false ? [] : [{}]
-  # launch_template_id          = var.launch_template_id == "null" ? null : var.launch_template_id
-  # launch_template_name        = var.launch_template_name == "null" ? null : var.launch_template_name
-  # launch_template_version     = var.launch_template_version == "null" ? null : var.launch_template_version
-  # ec2_ssh_key                 = var.ec2_ssh_key == "null" ? null : var.ec2_ssh_key
-  # default_ttl                 = var.default_ttl == "null" ? null : var.default_ttl
-  # field_level_encryption_id   = var.field_level_encryption_id == "null" ? null : var.field_level_encryption_id
-  # # whitelisted_names = var.whitelisted_names == "null" ? null : var.whitelisted_names
-  # origin_shield            = var.origin_shield == false ? [] : [{}]
-  # origin_shield_region     = var.origin_shield_region == "null" ? null : var.origin_shield_region
-  # acm_certificate_arn      = var.acm_certificate_arn == "null" ? null : var.acm_certificate_arn
-  # iam_certificate_id       = var.iam_certificate_id == "null" ? null : var.iam_certificate_id
-  # minimum_protocol_version = var.minimum_protocol_version == "null" ? null : var.minimum_protocol_version
-  # ssl_support_method       = var.ssl_support_method == "null" ? null : var.ssl_support_method
 }
-
-##############################################################
-
-# Data sources to get VPC, subnets and security group details
-
-##############################################################
-
-# data "aws_vpc" "vpc" {
-#   default = false
-#   id = var.vpc_id
-# }
 
 data "aws_subnets" "all" {
   filter {
     name = "vpc-id"
-    # values = [data.aws_vpc.vpc.id]
     values = [var.vpc_id]
   }
 }
@@ -278,16 +241,16 @@ resource "aws_eks_cluster" "k8_cluster" {
     for_each = var.eks_cluster_encryption_config
     content {
       provider {
-        key_arn = lookup(encryption_config.value, "key_arn", null)
+        key_arn = lookup(encryption_config.value, "encryption_config_key_arn", null)
       }
-      resources = lookup(encryption_config.value, "resources", null)
+      resources = lookup(encryption_config.value, "encryption_config_resources", null)
     }
   }
   dynamic "kubernetes_network_config" {
     for_each = var.kubernetes_network_config
     content {
-      service_ipv4_cidr = lookup(kubernetes_network_config.value, "service_ipv4_cidr", null)
-      ip_family         = lookup(kubernetes_network_config.value, "ip_family", null)
+      service_ipv4_cidr = lookup(kubernetes_network_config.value, "kubernetes_network_service_ipv4_cidr", null)
+      ip_family         = lookup(kubernetes_network_config.value, "kubernetes_network_ip_family", null)
     }
   }
   dynamic "outpost_config" {
@@ -385,8 +348,8 @@ resource "aws_eks_node_group" "k8_cluster" {
   dynamic "remote_access" {
     for_each = var.remote_access
     content {
-      ec2_ssh_key               = lookup(remote_access.value, "ec2_ssh_key", null)
-      source_security_group_ids = lookup(remote_access.value, "source_security_group_ids", null)
+      ec2_ssh_key               = lookup(remote_access.value, "remote_access_ec2_ssh_key", null)
+      source_security_group_ids = lookup(remote_access.value, "remote_access_source_security_group_ids", null)
     }
   }
   tags = var.node_group_tags
@@ -470,7 +433,6 @@ resource "aws_cloudfront_distribution" "distribution" {
         headers      = lookup(forwarded_values.value, "forward_headers", null)
         query_string = lookup(forwarded_values.value, "query_string", null)
       }
-      # query_string_cache_keys = lookup(default_cache_behavior.value, "query_string_cache_keys ", null)
     }
 
     dynamic "lambda_function_association" {
